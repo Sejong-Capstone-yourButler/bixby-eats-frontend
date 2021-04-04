@@ -16,6 +16,8 @@ import {
 // 이 부분이 Back-end에서 오는 파트다
 // apollo:codegen을 하면 __generated__ folder/loginMutation.ts 파일에
 // loginMutation, loginMutationVariables이 생성된다.
+// mutation 옆에 loginMutation은 typescript name이다.
+// 그 밑에 login이 back-end에 있는 mutation name이다.
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
     login(input: $loginInput) {
