@@ -76,7 +76,7 @@ export const CreateAccount = () => {
         <title>Create Account | Bixby Eats</title>
       </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-        <img src={bixbyEatsLogo} className="w-52 mb-10" alt="Bixby Eats" />
+        <img src={bixbyEatsLogo} className="w-28 mb-10" alt="Bixby Eats" />
         <h4 className="w-full font-medium text-left text-3xl mb-5">
           Let's get started
         </h4>
