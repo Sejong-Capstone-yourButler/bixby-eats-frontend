@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { Restaurant } from "../../components/restaurant";
-import { RESTAURANT_FRAGMENT } from "../../fragments";
+import { CATEGORY_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragments";
 import {
   restaurantsPageQuery,
   restaurantsPageQueryVariables,
@@ -16,11 +17,7 @@ const RESTAURANTS_QUERY = gql`
       ok
       error
       categories {
-        id
-        name
-        coverImg
-        slug
-        restaurantCount
+        ...CategoryParts
       }
     }
     restaurants(input: $input) {
@@ -34,6 +31,7 @@ const RESTAURANTS_QUERY = gql`
     }
   }
   ${RESTAURANT_FRAGMENT}
+  ${CATEGORY_FRAGMENT}
 `;
 
 interface IFormProps {
@@ -84,18 +82,17 @@ export const Restaurants = () => {
         <div className="max-w-screen-xl pb-20 mx-auto mt-8">
           <div className="grid grid-cols-4 md:flex justify-around max-w-6xl mx-auto ">
             {data?.allCategories.categories?.map((category) => (
-              <div
-                key={category.id}
-                className="flex flex-col group items-center cursor-pointer"
-              >
-                <div
-                  className="w-16 h-16 bg-cover group-hover:bg-gray-100 rounded-full"
-                  style={{ backgroundImage: `url(${category.coverImg})` }}
-                ></div>
-                <span className="mt-1 text-sm text-center font-medium">
-                  {category.name}
-                </span>
-              </div>
+              <Link key={category.id} to={`/category/${category.slug}`}>
+                <div className="flex flex-col group items-center cursor-pointer">
+                  <div
+                    className=" w-16 h-16 bg-cover group-hover:bg-gray-100 rounded-full"
+                    style={{ backgroundImage: `url(${category.coverImg})` }}
+                  ></div>
+                  <span className="mt-1 text-sm text-center font-medium">
+                    {category.name}
+                  </span>
+                </div>
+              </Link>
             ))}
           </div>
           <div className="mt-16 grid md:grid-cols-3 gap-x-5 gap-y-10">
