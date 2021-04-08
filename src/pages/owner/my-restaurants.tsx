@@ -26,7 +26,7 @@ export const MyRestaurants = () => {
       <Helmet>
         <title>My Restaurants | Bixby Eats</title>
       </Helmet>
-      <div className="max-w-screen-2xl mx-auto mt-32">
+      <div className="max-w-screen-xl mx-auto mt-32">
         <h2 className="text-4xl font-medium mb-10">My Restaurants</h2>
         {data?.myRestaurants.ok &&
         data.myRestaurants.restaurants.length === 0 ? (
