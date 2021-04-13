@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
+import { gql, useSubscription } from "@apollo/client";
+import { FULL_ORDER_FRAGMENT } from "../../fragments";
+import { coockedOrders } from "../../__generated__/coockedOrders";
+import { Link } from "react-router-dom";
+
+const COOCKED_ORDERS_SUBSCRIPTION = gql`
+  subscription coockedOrders {
+    cookedOrders {
+      ...FullOrderParts
+    }
+  }
+  ${FULL_ORDER_FRAGMENT}
+`;
 
 interface ICoords {
   lat: number;
@@ -76,6 +89,14 @@ export const Dashboard = () => {
       );
     }
   };
+  const { data: coockedOrdersData } = useSubscription<coockedOrders>(
+    COOCKED_ORDERS_SUBSCRIPTION
+  );
+  useEffect(() => {
+    if (coockedOrdersData?.cookedOrders.id) {
+      makeRoute();
+    }
+  }, [coockedOrdersData]);
   return (
     <div>
       <div
@@ -94,7 +115,29 @@ export const Dashboard = () => {
           bootstrapURLKeys={{ key: "AIzaSyDr47Qx79ewUO_hKU48SwY8VbXa72YuXDk" }}
         ></GoogleMapReact>
       </div>
-      <button onClick={makeRoute}>Get route</button>
+      <div className=" max-w-screen-sm mx-auto bg-white relative -top-10 shadow-lg py-8 px-5">
+        {coockedOrdersData?.cookedOrders.restaurant ? (
+          <>
+            <h1 className="text-center  text-3xl font-medium">
+              New Coocked Order
+            </h1>
+            <h1 className="text-center my-3 text-2xl font-medium">
+              Pick it up soon @{" "}
+              {coockedOrdersData?.cookedOrders.restaurant?.name}
+            </h1>
+            <Link
+              to={`/orders/${coockedOrdersData?.cookedOrders.id}`}
+              className="btn w-full  block  text-center mt-5"
+            >
+              Accept Challenge &rarr;
+            </Link>
+          </>
+        ) : (
+          <h1 className="text-center  text-3xl font-medium">
+            No orders yet...
+          </h1>
+        )}
+      </div>
     </div>
   );
 };
