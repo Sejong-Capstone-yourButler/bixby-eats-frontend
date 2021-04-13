@@ -129,7 +129,7 @@ export const Order = () => {
               {data?.getOrder.order?.driver?.email || "Not yet."}
             </span>
           </div>
-          {userData?.me.role === "Client" && (
+          {userData?.me.role === UserRole.Client && (
             <span className=" text-center mt-5 mb-3  text-2xl text-lime-600">
               Status: {data?.getOrder.order?.status}
             </span>
