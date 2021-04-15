@@ -32,12 +32,18 @@ export interface CreateAccountInput {
   role: UserRole;
 }
 
+export interface CreateDishIngredientInput {
+  name: string;
+  ingredientCount: number;
+}
+
 export interface CreateDishInput {
   name: string;
   price: number;
   description: string;
   options?: DishOptionInputType[] | null;
   restaurantId: number;
+  ingredients: CreateDishIngredientInput[];
 }
 
 export interface CreateOrderInput {
@@ -78,7 +84,19 @@ export interface EditProfileInput {
   password?: string | null;
 }
 
+export interface EditStockInput {
+  name?: string | null;
+  count?: number | null;
+  price?: number | null;
+  description?: string | null;
+  stockId: number;
+}
+
 export interface GetOrderInput {
+  id: number;
+}
+
+export interface GetStocksInput {
   id: number;
 }
 

@@ -59,6 +59,10 @@ export const AddDish = () => {
   });
   const onSubmit = () => {
     const { name, price, description, ...rest } = getValues();
+    const ingredientsObjects = ingredientsNumber.map((theId) => ({
+      name: rest[`${theId}-ingredientName`],
+      ingredientCount: +rest[`${theId}-ingredientCount`],
+    }));
     const optionObjects = optionsNumber.map((theId) => ({
       name: rest[`${theId}-optionName`],
       extra: +rest[`${theId}-optionExtra`],
@@ -71,24 +75,36 @@ export const AddDish = () => {
           description,
           restaurantId: +restaurantId,
           options: optionObjects,
+          ingredients: ingredientsObjects,
         },
       },
     });
-    history.goBack();
+    history.push(`restaurants/:restaurantId/stocks`);
   };
   const [optionsNumber, setOptionsNumber] = useState<number[]>([]);
+  const [ingredientsNumber, setIngredientsNumber] = useState<number[]>([]);
   const onAddOptionClick = () => {
     setOptionsNumber((current) => [Date.now(), ...current]);
   };
-  const onDeleteClick = (idToDelete: number) => {
+  const onAddIngredientClick = () => {
+    setIngredientsNumber((current) => [Date.now(), ...current]);
+  };
+  const onOptionDeleteClick = (idToDelete: number) => {
     setOptionsNumber((current) => current.filter((id) => id !== idToDelete));
     setValue(`${idToDelete}-optionName`, "");
     setValue(`${idToDelete}-optionExtra`, "");
   };
+  const onIngredientDeleteClick = (idToDelete: number) => {
+    setIngredientsNumber((current) =>
+      current.filter((id) => id !== idToDelete)
+    );
+    setValue(`${idToDelete}-ingredientName`, "");
+    setValue(`${idToDelete}-ingredientCount`, "");
+  };
   return (
     <div className="container flex flex-col items-center mt-52">
       <Helmet>
-        <title>Add Dish | Nuber Eats</title>
+        <title>Add Dish | Bixby Eats</title>
       </Helmet>
       <h4 className="font-semibold text-2xl mb-3">Add Dish</h4>
       <form
@@ -145,7 +161,42 @@ export const AddDish = () => {
                 />
                 <span
                   className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 bg-"
-                  onClick={() => onDeleteClick(id)}
+                  onClick={() => onOptionDeleteClick(id)}
+                >
+                  Delete Option
+                </span>
+              </div>
+            ))}
+        </div>
+        <div className="my-10">
+          <h4 className="font-medium mb-3 text-lg">Ingredients</h4>
+          <span
+            onClick={onAddIngredientClick}
+            className="cursor-pointer text-white bg-gray-900 py-1 px-2 mt-5 bg-"
+          >
+            Add ingredients used for the dish
+          </span>
+          {ingredientsNumber.length !== 0 &&
+            ingredientsNumber.map((id) => (
+              <div key={id} className="mt-5">
+                <input
+                  ref={register}
+                  name={`${id}-ingredientName`}
+                  className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
+                  type="text"
+                  placeholder="Ingredient Name"
+                />
+                <input
+                  ref={register}
+                  name={`${id}-ingredientCount`}
+                  className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
+                  type="number"
+                  min={0}
+                  placeholder="Ingredient Count"
+                />
+                <span
+                  className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 bg-"
+                  onClick={() => onIngredientDeleteClick(id)}
                 >
                   Delete Option
                 </span>

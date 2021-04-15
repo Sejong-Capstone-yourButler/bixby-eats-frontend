@@ -11,6 +11,7 @@ import { Dashboard } from "../pages/driver/dashboard";
 import { Order } from "../pages/order";
 import { AddDish } from "../pages/owner/add-dish";
 import { AddRestaurant } from "../pages/owner/add-restaurants";
+import { EditStock } from "../pages/owner/edit-stock";
 import { MyRestaurant } from "../pages/owner/my-restaurant";
 import { MyRestaurants } from "../pages/owner/my-restaurants";
 import { ConfirmEmail } from "../pages/user/confirm-email";
@@ -47,6 +48,10 @@ const restaurantRoutes = [
   { path: "/add-restaurant", component: <AddRestaurant /> },
   { path: "/restaurants/:id", component: <MyRestaurant /> },
   { path: "/restaurants/:restaurantId/add-dish", component: <AddDish /> },
+  {
+    path: "/restaurants/:restaurantId/stocks",
+    component: <EditStock />,
+  },
 ];
 
 const driverRoutes = [{ path: "/", component: <Dashboard /> }];
