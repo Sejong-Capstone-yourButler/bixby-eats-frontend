@@ -8,11 +8,19 @@ import {
   FULL_ORDER_FRAGMENT,
   ORDERS_FRAGMENT,
   RESTAURANT_FRAGMENT,
+  INCOME_FRAGMENT,
 } from "../../fragments";
+
 import {
   myRestaurant,
   myRestaurantVariables,
 } from "../../__generated__/myRestaurant";
+
+import {
+  getIncomes,
+  getIncomesVariables,
+} from "../../__generated__/getIncomes";
+
 import {
   VictoryAxis,
   VictoryChart,
@@ -22,6 +30,7 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
 } from "victory";
+
 import { pendingOrders } from "../../__generated__/pendingOrders";
 
 export const MY_RESTAURANT_QUERY = gql`
@@ -45,6 +54,19 @@ export const MY_RESTAURANT_QUERY = gql`
   ${ORDERS_FRAGMENT}
 `;
 
+export const GET_INCOMES = gql`
+  query getIncomes($input: GetIncomesInput!) {
+    getIncomes(input: $input) {
+      ok
+      error
+      incomes {
+        ...IncomeParts
+      }
+    }
+  }
+  ${INCOME_FRAGMENT}
+`;
+
 const PENDING_ORDERS_SUBSCRIPTION = gql`
   subscription pendingOrders {
     pendingOrders {
@@ -56,6 +78,11 @@ const PENDING_ORDERS_SUBSCRIPTION = gql`
 
 interface IParams {
   id: string;
+}
+
+interface IDayIncome {
+  createdAtString: string;
+  total: number | null;
 }
 
 export const MyRestaurant = () => {
@@ -70,9 +97,25 @@ export const MyRestaurant = () => {
       },
     }
   );
+  const { data: incomeData } = useQuery<getIncomes, getIncomesVariables>(
+    GET_INCOMES,
+    {
+      variables: {
+        input: {
+          restaurantId: +id,
+        },
+      },
+    }
+  );
   const { data: subscriptionData } = useSubscription<pendingOrders>(
     PENDING_ORDERS_SUBSCRIPTION
   );
+  const dayIncome: IDayIncome[] = [];
+  const vunc = () => {
+    incomeData?.getIncomes?.incomes?.forEach((income) => {
+      console.log(income);
+    });
+  };
   const history = useHistory();
   useEffect(() => {
     if (subscriptionData?.pendingOrders.id) {
@@ -123,6 +166,7 @@ export const MyRestaurant = () => {
         </div>
         <div className="mt-20 mb-10">
           <h4 className="text-center text-2xl font-medium">Sales</h4>
+          <button onClick={vunc}>Day</button>
           <div className="  mt-10">
             <VictoryChart
               height={500}
@@ -140,9 +184,9 @@ export const MyRestaurant = () => {
                     dy={-20}
                   />
                 }
-                data={data?.myRestaurant.restaurant?.orders.map((order) => ({
-                  x: order.createdAt,
-                  y: order.total,
+                data={incomeData?.getIncomes?.incomes?.map((income) => ({
+                  x: income.createdAtString,
+                  y: income.income,
                 }))}
                 interpolation="natural"
                 style={{

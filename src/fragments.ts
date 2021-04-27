@@ -46,6 +46,7 @@ export const ORDERS_FRAGMENT = gql`
     id
     createdAt
     total
+    createdAtString
   }
 `;
 
@@ -63,5 +64,12 @@ export const FULL_ORDER_FRAGMENT = gql`
     restaurant {
       name
     }
+  }
+`;
+export const INCOME_FRAGMENT = gql`
+  fragment IncomeParts on Income {
+    id
+    createdAtString
+    income
   }
 `;

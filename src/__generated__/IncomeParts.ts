@@ -4,13 +4,12 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: OrderParts
+// GraphQL fragment: IncomeParts
 // ====================================================
 
-export interface OrderParts {
-  __typename: "Order";
+export interface IncomeParts {
+  __typename: "Income";
   id: number;
-  createdAt: any;
-  total: number | null;
   createdAtString: string;
+  income: number | null;
 }

@@ -92,6 +92,10 @@ export interface EditStockInput {
   stockId: number;
 }
 
+export interface GetIncomesInput {
+  restaurantId: number;
+}
+
 export interface GetOrderInput {
   id: number;
 }

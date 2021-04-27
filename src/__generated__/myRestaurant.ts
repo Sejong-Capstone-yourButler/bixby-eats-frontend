@@ -42,6 +42,7 @@ export interface myRestaurant_myRestaurant_restaurant_orders {
   id: number;
   createdAt: any;
   total: number | null;
+  createdAtString: string;
 }
 
 export interface myRestaurant_myRestaurant_restaurant {
