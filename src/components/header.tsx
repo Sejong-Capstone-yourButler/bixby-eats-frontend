@@ -1,12 +1,21 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { isLoggedInVar } from "../apollo";
+import { LOCALSTORAGE_TOKEN } from "../constants";
 import { useMe } from "../hooks/useMe";
 import bixbyEatsLogo from "../images/logo.svg";
 
 export const Header: React.FC = () => {
   const { data } = useMe();
+  const history = useHistory();
+
+  const logout = () => {
+    localStorage.removeItem(LOCALSTORAGE_TOKEN);
+    isLoggedInVar(false);
+    history.push("/");
+  };
   return (
     <>
       {!data?.me.verified && (
@@ -19,7 +28,10 @@ export const Header: React.FC = () => {
           <Link to="/">
             <img src={bixbyEatsLogo} className="w-20" alt="Nuber Eats" />
           </Link>
-          <span className="text-xs">
+          <span className="">
+            <button className="mr-5 text-xl font-bold" onClick={logout}>
+              Logout
+            </button>
             <Link to="/edit-profile">
               <FontAwesomeIcon icon={faUser} className="text-3xl" />
             </Link>
