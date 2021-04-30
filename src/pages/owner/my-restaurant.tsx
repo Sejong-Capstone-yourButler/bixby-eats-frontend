@@ -110,12 +110,7 @@ export const MyRestaurant = () => {
   const { data: subscriptionData } = useSubscription<pendingOrders>(
     PENDING_ORDERS_SUBSCRIPTION
   );
-  const dayIncome: IDayIncome[] = [];
-  const vunc = () => {
-    incomeData?.getIncomes?.incomes?.forEach((income) => {
-      console.log(income);
-    });
-  };
+
   const history = useHistory();
   useEffect(() => {
     if (subscriptionData?.pendingOrders.id) {
@@ -166,7 +161,6 @@ export const MyRestaurant = () => {
         </div>
         <div className="mt-20 mb-10">
           <h4 className="text-center text-2xl font-medium">Sales</h4>
-          <button onClick={vunc}>Day</button>
           <div className="  mt-10">
             <VictoryChart
               height={500}
