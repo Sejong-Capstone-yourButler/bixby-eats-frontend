@@ -5,8 +5,12 @@ interface IDishOptionProps {
   name: string;
   extra?: number | null;
   dishId: number;
-  addOptionToItem: (dishId: number, optionName: string) => void;
-  removeOptionFromItem: (dishId: number, optionName: string) => void;
+  addOptionToItem: (dishId: number, optionName: string, count: number) => void;
+  removeOptionFromItem: (
+    dishId: number,
+    optionName: string,
+    count: number
+  ) => void;
 }
 
 export const DishOption: React.FC<IDishOptionProps> = ({
@@ -19,9 +23,9 @@ export const DishOption: React.FC<IDishOptionProps> = ({
 }) => {
   const onClick = () => {
     if (isSelected) {
-      removeOptionFromItem(dishId, name);
+      removeOptionFromItem(dishId, name, 1);
     } else {
-      addOptionToItem(dishId, name);
+      addOptionToItem(dishId, name, 1);
     }
   };
   return (

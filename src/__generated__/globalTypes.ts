@@ -54,6 +54,7 @@ export interface CreateOrderInput {
 export interface CreateOrderItemInput {
   dishId: number;
   options?: OrderItemOptionInputType[] | null;
+  count: number;
 }
 
 export interface CreateRestaurantInput {
