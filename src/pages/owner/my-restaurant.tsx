@@ -190,6 +190,15 @@ export const MyRestaurant = () => {
                 }}
               />
               <VictoryAxis
+                dependentAxis
+                tickLabelComponent={<VictoryLabel renderInPortal />}
+                style={{
+                  tickLabels: {
+                    fontSize: 20,
+                  } as any,
+                }}
+              />
+              <VictoryAxis
                 tickLabelComponent={<VictoryLabel renderInPortal />}
                 style={{
                   tickLabels: {
