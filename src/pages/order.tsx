@@ -8,6 +8,7 @@ import { editOrder, editOrderVariables } from "../__generated__/editOrder";
 import { getOrder, getOrderVariables } from "../__generated__/getOrder";
 import { orderUpdates } from "../__generated__/orderUpdates";
 import { OrderStatus, UserRole } from "../__generated__/globalTypes";
+import { Map } from "../components/map";
 
 const GET_ORDER = gql`
   query getOrder($input: GetOrderInput!) {
@@ -186,6 +187,7 @@ export const Order = () => {
             </span>
           )}
         </div>
+        <Map />
       </div>
     </div>
   );
