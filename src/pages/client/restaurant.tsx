@@ -73,22 +73,18 @@ export const Restaurant = () => {
   const isSelected = (dishId: number) => {
     return Boolean(getItem(dishId));
   };
-  const addItemToOrder = (dishId: number, count: number) => {
+  const addItemToOrder = (dishId: number) => {
     if (isSelected(dishId)) {
       return;
     }
-    setOrderItems((current) => [{ dishId, options: [], count }, ...current]);
+    setOrderItems((current) => [{ dishId, options: [] }, ...current]);
   };
   const removeFromOrder = (dishId: number) => {
     setOrderItems((current) =>
       current.filter((dish) => dish.dishId !== dishId)
     );
   };
-  const addOptionToItem = (
-    dishId: number,
-    optionName: string,
-    count: number
-  ) => {
+  const addOptionToItem = (dishId: number, optionName: string) => {
     if (!isSelected(dishId)) {
       return;
     }
@@ -103,18 +99,13 @@ export const Restaurant = () => {
           {
             dishId,
             options: [{ name: optionName }, ...oldItem.options!],
-            count,
           },
           ...current,
         ]);
       }
     }
   };
-  const removeOptionFromItem = (
-    dishId: number,
-    optionName: string,
-    count: number
-  ) => {
+  const removeOptionFromItem = (dishId: number, optionName: string) => {
     if (!isSelected(dishId)) {
       return;
     }
@@ -127,7 +118,6 @@ export const Restaurant = () => {
           options: oldItem.options?.filter(
             (option) => option.name !== optionName
           ),
-          count,
         },
         ...current,
       ]);
