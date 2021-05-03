@@ -79,7 +79,7 @@ export const AddDish = () => {
         },
       },
     });
-    history.push(`restaurants/${restaurantId}/stocks`);
+    history.push(`stocks`);
   };
   const [optionsNumber, setOptionsNumber] = useState<number[]>([]);
   const [ingredientsNumber, setIngredientsNumber] = useState<number[]>([]);
