@@ -155,6 +155,8 @@ export const Restaurant = () => {
     const {
       createOrder: { ok, orderId },
     } = data;
+    console.log("onCompleted");
+    console.log(data);
     if (data.createOrder.ok) {
       history.push(`/orders/${orderId}`);
     }
@@ -174,6 +176,8 @@ export const Restaurant = () => {
       return;
     }
     const ok = window.confirm("You are about to place an order");
+    console.log("Is ok?");
+    console.log(ok);
     if (ok) {
       createOrderMutation({
         variables: {
