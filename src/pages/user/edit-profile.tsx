@@ -2,6 +2,7 @@ import { gql, useApolloClient, useMutation } from "@apollo/client";
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
 import { Button } from "../../components/button";
 import { useMe } from "../../hooks/useMe";
 import {
@@ -25,6 +26,7 @@ interface IFormProps {
 
 export const EditProfile = () => {
   const { data: userData } = useMe();
+  const history = useHistory();
   const client = useApolloClient();
   const onCompleted = (data: editProfile) => {
     const {
@@ -75,10 +77,13 @@ export const EditProfile = () => {
       },
     });
   };
+  const back = () => {
+    history.push("/");
+  };
   return (
     <div className="mt-52 flex flex-col justify-center items-center">
       <Helmet>
-        <title>Not Found | Bixby Eats</title>
+        <title>Edit Profile | Bixby Eats</title>
       </Helmet>
       <h4 className="font-semibold text-2xl mb-3">Edit Profile</h4>
       <form
@@ -106,6 +111,9 @@ export const EditProfile = () => {
           canClick={formState.isValid}
           actionText="Save Profile"
         />
+        <button onClick={back} className="btn">
+          Back
+        </button>
       </form>
     </div>
   );
