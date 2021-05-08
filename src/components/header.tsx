@@ -1,7 +1,7 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { isLoggedInVar } from "../apollo";
 import { LOCALSTORAGE_TOKEN } from "../constants";
 import { useMe } from "../hooks/useMe";
@@ -14,6 +14,7 @@ export const Header: React.FC = () => {
   const logout = () => {
     localStorage.removeItem(LOCALSTORAGE_TOKEN);
     isLoggedInVar(false);
+    window.location.reload();
     history.push("/");
   };
   return (
