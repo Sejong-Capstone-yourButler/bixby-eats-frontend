@@ -112,9 +112,6 @@ export const MyRestaurant = () => {
   );
 
   const history = useHistory();
-  const onClick = () => {
-    console.log(incomeData);
-  };
   useEffect(() => {
     if (subscriptionData?.pendingOrders.id) {
       history.push(`/orders/${subscriptionData.pendingOrders.id}`);
@@ -127,7 +124,6 @@ export const MyRestaurant = () => {
           {data?.myRestaurant.restaurant?.name || "Loading..."} | Bixby Eats
         </title>
       </Helmet>
-      <div onClick={onClick}>Console.log</div>
       <div
         className="  bg-gray-700  py-28 bg-center bg-cover"
         style={{
