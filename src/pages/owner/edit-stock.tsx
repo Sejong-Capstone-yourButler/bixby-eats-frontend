@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { StockForm } from "../../components/stockForm";
 import { getStocks, getStocksVariables } from "../../__generated__/getStocks";
 
@@ -27,15 +27,20 @@ interface IParams {
 }
 
 export const EditStock = () => {
-  const params = useParams<IParams>();
+  const { restaurantId } = useParams<IParams>();
+  const history = useHistory();
+
   const { data } = useQuery<getStocks, getStocksVariables>(GET_STOCKS_QUERY, {
     variables: {
       input: {
-        id: +params.restaurantId,
+        id: +restaurantId,
       },
     },
   });
 
+  const back = () => {
+    history.push(`/restaurants/${restaurantId}`);
+  };
   return (
     <div className="container flex flex-col items-center my-32">
       <Helmet>
@@ -60,6 +65,10 @@ export const EditStock = () => {
           description={stock.description}
         />
       ))}
+
+      <button onClick={back} className="btn w-32">
+        Back
+      </button>
     </div>
   );
 };
