@@ -143,7 +143,7 @@ export const AddDish = () => {
           </span>
           {optionsNumber.length !== 0 &&
             optionsNumber.map((id) => (
-              <div key={id} className="mt-5">
+              <div key={id} className="grid grid-cols-3 mt-5">
                 <input
                   ref={register}
                   name={`${id}-optionName`}
@@ -178,7 +178,7 @@ export const AddDish = () => {
           </span>
           {ingredientsNumber.length !== 0 &&
             ingredientsNumber.map((id) => (
-              <div key={id} className="mt-5">
+              <div key={id} className="grid grid-cols-3 mt-5">
                 <input
                   ref={register}
                   name={`${id}-ingredientName`}
