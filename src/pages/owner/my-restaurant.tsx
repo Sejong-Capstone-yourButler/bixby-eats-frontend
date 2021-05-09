@@ -120,7 +120,7 @@ export const MyRestaurant = () => {
         </title>
       </Helmet>
       <div
-        className="  bg-gray-700  py-28 bg-center bg-cover"
+        className="bg-gray-700  py-28 bg-center bg-cover"
         style={{
           backgroundImage: `url(${data?.myRestaurant.restaurant?.coverImg})`,
         }}
@@ -129,24 +129,26 @@ export const MyRestaurant = () => {
         <h2 className="text-4xl font-medium mb-10">
           {data?.myRestaurant.restaurant?.name || "Loading..."}
         </h2>
-        <Link
-          to={`/restaurants/${id}/add-dish`}
-          className=" mr-8 bg-gray-800 myRestaurantButton"
-        >
-          Add Dish &rarr;
-        </Link>
-        <Link
-          to={`/restaurants/${id}/edit-dish`}
-          className="mr-8 bg-yellow-400 myRestaurantButton"
-        >
-          Edit Dish &rarr;
-        </Link>
-        <Link
-          to={`/restaurants/${id}/stocks`}
-          className="mr-8 bg-lime-700 myRestaurantButton"
-        >
-          Stock Management &rarr;
-        </Link>
+        <div className="flex flex-col lg:block w-full">
+          <Link
+            to={`/restaurants/${id}/add-dish`}
+            className="mb-2 lg:mr-8 bg-gray-800 myRestaurantButton"
+          >
+            Add Dish &rarr;
+          </Link>
+          <Link
+            to={`/restaurants/${id}/edit-dish`}
+            className="mb-2 lg:mr-8 bg-yellow-400 myRestaurantButton"
+          >
+            Edit Dish &rarr;
+          </Link>
+          <Link
+            to={`/restaurants/${id}/stocks`}
+            className="lg:mr-8 bg-lime-700 myRestaurantButton"
+          >
+            Stock Management &rarr;
+          </Link>
+        </div>
         {/* <Link to={``} className="bg-lime-700 myRestaurantButton">
           Buy Promotion &rarr;
         </Link> */}
