@@ -80,11 +80,6 @@ interface IParams {
   id: string;
 }
 
-interface IDayIncome {
-  createdAtString: string;
-  total: number | null;
-}
-
 export const MyRestaurant = () => {
   const { id } = useParams<IParams>();
   const { data } = useQuery<myRestaurant, myRestaurantVariables>(
