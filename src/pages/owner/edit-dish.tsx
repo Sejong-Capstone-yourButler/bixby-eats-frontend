@@ -35,7 +35,7 @@ export const EditDish = () => {
         <title>Edit Dish | Bixby Eats</title>
       </Helmet>
       <h4 className="font-semibold text-2xl mb-3">Edit Dish</h4>
-      <div className="grid grid-cols-4 max-w-screen-lg gap-3 my-5 w-full">
+      <div className="grid grid-cols-5 max-w-screen-lg gap-3 my-5 w-full">
         <div className="text-center text-lg font-bold">Name</div>
         <div className="text-center text-lg font-bold">Price</div>
         <div className="text-center text-lg font-bold">Description</div>
