@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router";
-import { Stock } from "../../components/stockForm";
+import { StockForm } from "../../components/stockForm";
 import { getStocks, getStocksVariables } from "../../__generated__/getStocks";
 
 const GET_STOCKS_QUERY = gql`
@@ -51,7 +51,7 @@ export const EditStock = () => {
       </div>
 
       {data?.getStocks.stocks.map((stock) => (
-        <Stock
+        <StockForm
           key={stock.id}
           id={stock.id + ""}
           name={stock.name}

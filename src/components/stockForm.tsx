@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import { editStock, editStockVariables } from "../__generated__/editStock";
 
-interface IRestaurantProps {
+interface IStockFormProps {
   id: string;
   name: string;
   price: number | null;
@@ -30,7 +30,7 @@ const EDIT_STOCK_MUTATION = gql`
   }
 `;
 
-export const Stock: React.FC<IRestaurantProps> = ({
+export const StockForm: React.FC<IStockFormProps> = ({
   id,
   name,
   price,

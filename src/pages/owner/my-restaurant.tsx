@@ -131,11 +131,23 @@ export const MyRestaurant = () => {
         </h2>
         <Link
           to={`/restaurants/${id}/add-dish`}
-          className=" mr-8 text-white bg-gray-800 py-3 px-10"
+          className=" mr-8 bg-gray-800 myRestaurantButton"
         >
           Add Dish &rarr;
         </Link>
-        <Link to={``} className=" text-white bg-lime-700 py-3 px-10">
+        <Link
+          to={`/restaurants/${id}/edit-dish`}
+          className="mr-8 bg-yellow-400 myRestaurantButton"
+        >
+          Edit Dish &rarr;
+        </Link>
+        <Link
+          to={`/restaurants/${id}/stocks`}
+          className="mr-8 bg-lime-700 myRestaurantButton"
+        >
+          Stock Management &rarr;
+        </Link>
+        <Link to={``} className="bg-lime-700 myRestaurantButton">
           Buy Promotion &rarr;
         </Link>
         <div className="mt-10">
