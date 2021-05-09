@@ -147,9 +147,9 @@ export const MyRestaurant = () => {
         >
           Stock Management &rarr;
         </Link>
-        <Link to={``} className="bg-lime-700 myRestaurantButton">
+        {/* <Link to={``} className="bg-lime-700 myRestaurantButton">
           Buy Promotion &rarr;
-        </Link>
+        </Link> */}
         <div className="mt-10">
           {data?.myRestaurant.restaurant?.menu.length === 0 ? (
             <h4 className="text-xl mb-5">Please upload a dish!</h4>
