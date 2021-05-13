@@ -52,14 +52,11 @@ export const DishForm: React.FC<IDishFormProps> = ({
     } = data;
     if (ok) {
       // delete를 누르면 해당 목록이 삭제되도록 조치
-      console.log(location.pathname);
       history.push(location.pathname);
     }
   };
-  const [editDishMutation, { loading: editDishLoading }] = useMutation<
-    editDish,
-    editDishVariables
-  >(EDIT_DISH_MUTATION);
+  const [editDishMutation, { loading: editDishLoading }] =
+    useMutation<editDish, editDishVariables>(EDIT_DISH_MUTATION);
   const [deleteDishMutation, { loading: deleteDishLoading }] = useMutation<
     deleteDish,
     deleteDishVariables
