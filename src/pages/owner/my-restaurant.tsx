@@ -46,6 +46,10 @@ export const MY_RESTAURANT_QUERY = gql`
         orders {
           ...OrderParts
         }
+        owner {
+          id
+          role
+        }
       }
     }
   }
@@ -112,6 +116,8 @@ export const MyRestaurant = () => {
       history.push(`/orders/${subscriptionData.pendingOrders.id}`);
     }
   }, [subscriptionData]);
+  const userRole = data?.myRestaurant.restaurant?.owner.role;
+  console.log(data?.myRestaurant.restaurant);
   return (
     <div>
       <Helmet>
@@ -149,9 +155,6 @@ export const MyRestaurant = () => {
             Stock Management &rarr;
           </Link>
         </div>
-        {/* <Link to={``} className="bg-lime-700 myRestaurantButton">
-          Buy Promotion &rarr;
-        </Link> */}
         <div className="mt-10">
           {data?.myRestaurant.restaurant?.menu.length === 0 ? (
             <h4 className="text-xl mb-5">Please upload a dish!</h4>
@@ -163,6 +166,7 @@ export const MyRestaurant = () => {
                   name={dish.name}
                   description={dish.description}
                   price={dish.price}
+                  userRole={userRole}
                 />
               ))}
             </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { UserRole } from "../__generated__/globalTypes";
 import { restaurant_restaurant_restaurant_menu_options } from "../__generated__/restaurant";
 
 interface IDishProps {
@@ -12,6 +13,7 @@ interface IDishProps {
   options?: restaurant_restaurant_restaurant_menu_options[] | null;
   addItemToOrder?: (dishId: number, count: number) => void;
   removeFromOrder?: (dishId: number) => void;
+  userRole?: UserRole | undefined;
 }
 
 export const Dish: React.FC<IDishProps> = ({
@@ -25,6 +27,7 @@ export const Dish: React.FC<IDishProps> = ({
   isSelected,
   addItemToOrder,
   removeFromOrder,
+  userRole,
   children: dishOptions,
 }) => {
   const onClick = () => {
@@ -56,6 +59,7 @@ export const Dish: React.FC<IDishProps> = ({
               {isSelected ? "Remove" : "Add"}
             </button>
           )}
+          {userRole}
         </h3>
         <h4 className="font-medium">{description}</h4>
       </div>

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { MyRestaurantInput } from "./globalTypes";
+import { MyRestaurantInput, UserRole } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: myRestaurant
@@ -45,6 +45,12 @@ export interface myRestaurant_myRestaurant_restaurant_orders {
   createdAtString: string;
 }
 
+export interface myRestaurant_myRestaurant_restaurant_owner {
+  __typename: "User";
+  id: number;
+  role: UserRole;
+}
+
 export interface myRestaurant_myRestaurant_restaurant {
   __typename: "Restaurant";
   id: number;
@@ -55,6 +61,7 @@ export interface myRestaurant_myRestaurant_restaurant {
   isPromoted: boolean;
   menu: myRestaurant_myRestaurant_restaurant_menu[];
   orders: myRestaurant_myRestaurant_restaurant_orders[];
+  owner: myRestaurant_myRestaurant_restaurant_owner;
 }
 
 export interface myRestaurant_myRestaurant {
