@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 import { Button } from "./button";
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";

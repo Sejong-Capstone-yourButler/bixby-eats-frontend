@@ -52,16 +52,13 @@ interface IRestaurantParams {
 // useParams는 우리에게 parameter를 준다.
 export const Restaurant = () => {
   const params = useParams<IRestaurantParams>();
-  const { loading, data } = useQuery<restaurant, restaurantVariables>(
-    RESTAURANT_QUERY,
-    {
-      variables: {
-        input: {
-          restaurantId: +params.id,
-        },
+  const { data } = useQuery<restaurant, restaurantVariables>(RESTAURANT_QUERY, {
+    variables: {
+      input: {
+        restaurantId: +params.id,
       },
-    }
-  );
+    },
+  });
   const [orderStarted, setOrderStarted] = useState(false);
   const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([]);
   const triggerStartOrder = () => {
@@ -91,7 +88,7 @@ export const Restaurant = () => {
     const oldItem = getItem(dishId);
     if (oldItem) {
       const hasOption = Boolean(
-        oldItem.options?.find((aOption) => aOption.name == optionName)
+        oldItem.options?.find((aOption) => aOption.name === optionName)
       );
       if (!hasOption) {
         removeFromOrder(dishId);
@@ -145,9 +142,7 @@ export const Restaurant = () => {
     const {
       createOrder: { ok, orderId },
     } = data;
-    console.log("onCompleted");
-    console.log(data);
-    if (data.createOrder.ok) {
+    if (ok) {
       history.push(`/orders/${orderId}`);
     }
   };
@@ -166,8 +161,6 @@ export const Restaurant = () => {
       return;
     }
     const ok = window.confirm("You are about to place an order");
-    console.log("Is ok?");
-    console.log(ok);
     if (ok) {
       createOrderMutation({
         variables: {

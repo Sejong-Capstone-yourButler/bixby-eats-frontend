@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "./button";
 import { useMutation } from "@apollo/client";
@@ -153,10 +153,6 @@ export const DishForm: React.FC<IDishFormProps> = ({
 
   return (
     <div>
-      {options &&
-        options.map((option) => {
-          <h1>{option.name}</h1>;
-        })}
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mb-20">
         <div className="flex flex-col items-center">
           <h3 className="font-semibold text-2xl mb-3">기본 정보</h3>
