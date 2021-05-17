@@ -102,6 +102,7 @@ export interface EditDishInput {
   options?: DishOptionInputType[] | null;
   ingredients?: IngredientInputType[] | null;
   dishId: number;
+  restaurantId: number;
 }
 
 export interface EditOrderInput {
@@ -145,7 +146,6 @@ export interface IncomeInputType {
 }
 
 export interface IngredientInputType {
-  ingredientId: number;
   stock: StockInputType;
   count: number;
 }
@@ -218,7 +218,6 @@ export interface SearchRestaurantInput {
 }
 
 export interface StockInputType {
-  stockId: number;
   name: string;
   count?: number | null;
   price?: number | null;

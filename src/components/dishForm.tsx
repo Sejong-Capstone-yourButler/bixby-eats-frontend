@@ -17,6 +17,7 @@ interface IDishFormProps {
   description?: string | undefined;
   options?: getDish_getDish_dish_options[] | null;
   ingredients?: getDish_getDish_dish_ingredients[];
+  restaurantId: string;
 }
 
 interface IForm {
@@ -42,6 +43,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
   description,
   options,
   ingredients,
+  restaurantId,
 }) => {
   const [editDishMutation, { loading: editDishLoading }] =
     useMutation<editDish, editDishVariables>(EDIT_DISH_MUTATION);
@@ -131,40 +133,68 @@ export const DishForm: React.FC<IDishFormProps> = ({
     setValue(`${idToDelete}-optionExtra`, "");
   };
 
+  // 재료 추가
+  const [ingredientsNumbers, setIngredientsNumbers] = useState<number[]>([]);
+  const onAddIngredientClick = () => {
+    setIngredientsNumbers((current) => [Date.now(), ...current]);
+  };
+  const onIngredientDeleteClick = (idToDelete: number) => {
+    setIngredientsNumbers((current) =>
+      current.filter((id) => id !== idToDelete)
+    );
+    setValue(`${idToDelete}-ingredientName`, "");
+    setValue(`${idToDelete}-ingredientCount`, "");
+  };
+
   const onSubmit = () => {
     const { name, price, description, ...rest } = getValues();
+
+    // 옵션 추가 및 수정
+    // 옵션 수정
     const editedOptionObjects = options?.map((option) => {
       return {
         name: rest[`${option.name}-optionName`],
         extra: +rest[`${option.name}-optionExtra`],
       };
     });
+
     // 옵션 추가
     const addOptionObjects = optionsNumbers.map((theId) => ({
       name: rest[`${theId}-optionName`],
       extra: +rest[`${theId}-optionExtra`],
     }));
+
     let optionObjects: any[] = [];
     if (editedOptionObjects) {
       optionObjects = addOptionObjects.concat(editedOptionObjects);
     }
-    console.log(editedOptionObjects);
-    console.log(addOptionObjects);
-    console.log(optionObjects);
-    const ingredientObjects = ingredients?.map((ingredient) => {
-      return {
-        ingredientId: ingredient.id,
-        stock: {
-          stockId: ingredient.stock.id,
-          name: rest[`${ingredient.id}-ingredientName`],
-        },
-        count: +rest[`${ingredient.id}-ingredientCount`],
-      };
-    });
+
+    // 재료 수정 및 추가
+    // 재료 수정
+    const editedIngredientObjects = ingredients?.map((ingredient) => ({
+      stock: {
+        name: rest[`${ingredient.id}-ingredientName`],
+      },
+      count: +rest[`${ingredient.id}-ingredientCount`],
+    }));
+
+    // 재료 추가
+    const addIngredientObjects = ingredientsNumbers.map((theId) => ({
+      stock: {
+        name: rest[`${theId}-ingredientName`],
+      },
+      count: +rest[`${theId}-ingredientCount`],
+    }));
+
+    let ingredientObjects: any[] = [];
+    if (editedIngredientObjects) {
+      ingredientObjects = editedIngredientObjects.concat(addIngredientObjects);
+    }
 
     editDishMutation({
       variables: {
         input: {
+          restaurantId: +restaurantId,
           name,
           price: +price,
           description,
@@ -279,14 +309,20 @@ export const DishForm: React.FC<IDishFormProps> = ({
                 className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 bg-"
                 onClick={() => onOptionDeleteClick(id)}
               >
-                Delete Option
+                옵션 삭제
               </span>
             </div>
           ))}
       </div>
 
-      <div className="flex flex-col items-center mt-8">
+      <div className="flex flex-col items-center my-8">
         <h3 className="font-semibold text-2xl mb-3">음식 재료 정보</h3>
+        <span
+          onClick={onAddIngredientClick}
+          className="cursor-pointer text-white bg-gray-900 py-1 px-2 mt-5"
+        >
+          메뉴에 사용될 재료 추가
+        </span>
         <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
           <div className="text-center text-lg font-bold">재료 이름</div>
           <div className="text-center text-lg font-bold">재료 개수</div>
@@ -316,6 +352,33 @@ export const DishForm: React.FC<IDishFormProps> = ({
                 onChange={(e) => onChangeIngredientCount(e, index)}
                 ref={register}
               />
+            </div>
+          ))}
+
+        {ingredientsNumbers.length !== 0 &&
+          ingredientsNumbers.map((id) => (
+            <div key={id} className="grid grid-cols-3 mt-5">
+              <input
+                ref={register}
+                name={`${id}-ingredientName`}
+                className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
+                type="text"
+                placeholder="Ingredient Name"
+              />
+              <input
+                ref={register}
+                name={`${id}-ingredientCount`}
+                className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
+                type="number"
+                min={0}
+                placeholder="Ingredient Count"
+              />
+              <span
+                className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5"
+                onClick={() => onIngredientDeleteClick(id)}
+              >
+                재료 삭제
+              </span>
             </div>
           ))}
       </div>
