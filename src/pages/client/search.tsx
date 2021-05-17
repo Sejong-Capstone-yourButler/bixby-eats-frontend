@@ -28,10 +28,10 @@ export const Search = () => {
   const [page, setPage] = useState(1);
   const location = useLocation();
   const history = useHistory();
-  const [callQuery, { loading, data, called }] = useLazyQuery<
-    searchRestaurant,
-    searchRestaurantVariables
-  >(SEARCH_RESTAURANT);
+  const [callQuery, { loading, data, called }] =
+    useLazyQuery<searchRestaurant, searchRestaurantVariables>(
+      SEARCH_RESTAURANT
+    );
   useEffect(() => {
     const [_, query] = location.search.split("?term=");
     if (!query) {
@@ -45,7 +45,7 @@ export const Search = () => {
         },
       },
     });
-  }, [history, location]);
+  }, [history, location, callQuery, page]);
   const onNextPageClick = () => setPage((current) => current + 1);
   const onPrevPageClick = () => setPage((current) => current - 1);
   console.log(loading, data, called);
