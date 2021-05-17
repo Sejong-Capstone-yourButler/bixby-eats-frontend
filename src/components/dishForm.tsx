@@ -56,14 +56,12 @@ export const DishForm: React.FC<IDishFormProps> = ({
   const [pDescription, setDescription] = useState<string>(
     description ? description : ""
   );
-
   const [optionNames, setOptionNames] = useState<string[]>(
     options!.map((option) => option!.name)
   );
   const [optionExtras, setOptionExtras] = useState<number[]>(
     options!.map((option) => option!.extra)
   );
-
   const [ingredientNames, setIngredientNames] = useState<string[]>(
     ingredients!.map((ingredient) => ingredient!.stock!.name)
   );
@@ -89,7 +87,6 @@ export const DishForm: React.FC<IDishFormProps> = ({
     } = e;
     setDescription(value);
   };
-
   const onChangeOptionName = (e: any, index: number) => {
     const {
       target: { value },
@@ -97,7 +94,6 @@ export const DishForm: React.FC<IDishFormProps> = ({
     optionNames[index] = value;
     setOptionNames(optionNames.map((optionName) => optionName));
   };
-
   const onChangeOptionExtra = (e: any, index: number) => {
     const {
       target: { value },
@@ -105,7 +101,6 @@ export const DishForm: React.FC<IDishFormProps> = ({
     optionExtras[index] = value;
     setOptionExtras(optionExtras.map((optionExtra) => optionExtra));
   };
-
   const onChangeIngredientName = (e: any, index: number) => {
     const {
       target: { value },
@@ -113,7 +108,6 @@ export const DishForm: React.FC<IDishFormProps> = ({
     ingredientNames[index] = value;
     setIngredientNames(ingredientNames.map((ingredient) => ingredient));
   };
-
   const onChangeIngredientCount = (e: any, index: number) => {
     const {
       target: { value },
@@ -122,12 +116,31 @@ export const DishForm: React.FC<IDishFormProps> = ({
     setIngredientCounts(ingredientCounts.map((ingredient) => ingredient));
   };
 
+  // 기존 옵션
+  const [sOptions, setSOptions] = useState<
+    getDish_getDish_dish_options[] | null
+  >(options!);
+  const onDeleteExistingOptionClick = (
+    optionName: string,
+    optionExtra: number
+  ) => {
+    setSOptions((current) =>
+      current!.filter((option) => option.name !== optionName)
+    );
+    setOptionNames((current) => current!.filter((name) => name !== optionName));
+    setOptionExtras((current) =>
+      current!.filter((extra) => extra !== optionExtra)
+    );
+    setValue(`${optionName}-optionName`, "");
+    setValue(`${optionName}-optionExtra`, "");
+  };
+
   // 옵션 추가
   const [optionsNumbers, setOptionsNumbers] = useState<number[]>([]);
   const onAddOptionClick = () => {
     setOptionsNumbers((current) => [Date.now(), ...current]);
   };
-  const onOptionDeleteClick = (idToDelete: number) => {
+  const onDeleteOptionClick = (idToDelete: number) => {
     setOptionsNumbers((current) => current.filter((id) => id !== idToDelete));
     setValue(`${idToDelete}-optionName`, "");
     setValue(`${idToDelete}-optionExtra`, "");
@@ -138,7 +151,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
   const onAddIngredientClick = () => {
     setIngredientsNumbers((current) => [Date.now(), ...current]);
   };
-  const onIngredientDeleteClick = (idToDelete: number) => {
+  const onDeleteIngredientClick = (idToDelete: number) => {
     setIngredientsNumbers((current) =>
       current.filter((id) => id !== idToDelete)
     );
@@ -151,7 +164,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
 
     // 옵션 추가 및 수정
     // 옵션 수정
-    const editedOptionObjects = options?.map((option) => {
+    const editedOptionObjects = sOptions?.map((option) => {
       return {
         name: rest[`${option.name}-optionName`],
         extra: +rest[`${option.name}-optionExtra`],
@@ -168,6 +181,9 @@ export const DishForm: React.FC<IDishFormProps> = ({
     if (editedOptionObjects) {
       optionObjects = addOptionObjects.concat(editedOptionObjects);
     }
+
+    console.log(editedOptionObjects);
+    console.log(addOptionObjects);
 
     // 재료 수정 및 추가
     // 재료 수정
@@ -255,15 +271,16 @@ export const DishForm: React.FC<IDishFormProps> = ({
         >
           옵션 추가
         </span>
-        <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
+        <div className="grid grid-cols-3 max-w-screen-lg gap-3 my-5 w-full">
           <div className="text-center text-lg font-bold">옵션 이름</div>
           <div className="text-center text-lg font-bold">추가 요금</div>
+          <div></div>
         </div>
-        {options &&
-          options?.map((option, index) => (
+        {sOptions &&
+          sOptions?.map((option, index) => (
             <div
               key={option.name}
-              className="grid grid-cols-2 gap-3 mb-5 max-w-screen-lg w-full"
+              className="grid grid-cols-3 gap-3 mb-5 max-w-screen-lg w-full"
             >
               <input
                 className="input"
@@ -279,11 +296,19 @@ export const DishForm: React.FC<IDishFormProps> = ({
                 type="number"
                 name={`${option.name}-optionExtra`}
                 placeholder="추가 요금"
-                value={optionExtras && optionExtras[index]}
+                value={optionExtras[index]}
                 min={0}
                 onChange={(e) => onChangeOptionExtra(e, index)}
                 ref={register}
               />
+              <button
+                className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 text-center"
+                onClick={() =>
+                  onDeleteExistingOptionClick(option.name, option.extra)
+                }
+              >
+                옵션 삭제
+              </button>
             </div>
           ))}
 
@@ -306,8 +331,8 @@ export const DishForm: React.FC<IDishFormProps> = ({
                 placeholder="Option Extra"
               />
               <span
-                className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 bg-"
-                onClick={() => onOptionDeleteClick(id)}
+                className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 text-center"
+                onClick={() => onDeleteOptionClick(id)}
               >
                 옵션 삭제
               </span>
@@ -374,8 +399,8 @@ export const DishForm: React.FC<IDishFormProps> = ({
                 placeholder="Ingredient Count"
               />
               <span
-                className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5"
-                onClick={() => onIngredientDeleteClick(id)}
+                className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 text-center"
+                onClick={() => onDeleteIngredientClick(id)}
               >
                 재료 삭제
               </span>
