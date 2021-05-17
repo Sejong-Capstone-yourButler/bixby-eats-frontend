@@ -33,7 +33,7 @@ export const Search = () => {
       SEARCH_RESTAURANT
     );
   useEffect(() => {
-    const [_, query] = location.search.split("?term=");
+    const [, query] = location.search.split("?term=");
     if (!query) {
       return history.replace("/");
     }
