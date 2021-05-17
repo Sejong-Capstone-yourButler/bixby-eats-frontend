@@ -45,9 +45,10 @@ export const DishForm: React.FC<IDishFormProps> = ({
 }) => {
   const [editDishMutation, { loading: editDishLoading }] =
     useMutation<editDish, editDishVariables>(EDIT_DISH_MUTATION);
-  const { register, handleSubmit, formState, getValues } = useForm<IForm>({
-    mode: "onChange",
-  });
+  const { register, handleSubmit, formState, getValues, setValue } =
+    useForm<IForm>({
+      mode: "onChange",
+    });
   const [pName, setName] = useState<string>(name ? name : "");
   const [pPrice, setPrice] = useState<number>(price ? price : 0);
   const [pDescription, setDescription] = useState<string>(
@@ -119,14 +120,37 @@ export const DishForm: React.FC<IDishFormProps> = ({
     setIngredientCounts(ingredientCounts.map((ingredient) => ingredient));
   };
 
+  // 옵션 추가
+  const [optionsNumbers, setOptionsNumbers] = useState<number[]>([]);
+  const onAddOptionClick = () => {
+    setOptionsNumbers((current) => [Date.now(), ...current]);
+  };
+  const onOptionDeleteClick = (idToDelete: number) => {
+    setOptionsNumbers((current) => current.filter((id) => id !== idToDelete));
+    setValue(`${idToDelete}-optionName`, "");
+    setValue(`${idToDelete}-optionExtra`, "");
+  };
+
   const onSubmit = () => {
     const { name, price, description, ...rest } = getValues();
-    const optionObjects = options?.map((option) => {
+    const editedOptionObjects = options?.map((option) => {
       return {
         name: rest[`${option.name}-optionName`],
         extra: +rest[`${option.name}-optionExtra`],
       };
     });
+    // 옵션 추가
+    const addOptionObjects = optionsNumbers.map((theId) => ({
+      name: rest[`${theId}-optionName`],
+      extra: +rest[`${theId}-optionExtra`],
+    }));
+    let optionObjects: any[] = [];
+    if (editedOptionObjects) {
+      optionObjects = addOptionObjects.concat(editedOptionObjects);
+    }
+    console.log(editedOptionObjects);
+    console.log(addOptionObjects);
+    console.log(optionObjects);
     const ingredientObjects = ingredients?.map((ingredient) => {
       return {
         ingredientId: ingredient.id,
@@ -192,8 +216,15 @@ export const DishForm: React.FC<IDishFormProps> = ({
           ref={register({ required: "Description is required." })}
         />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mt-8">
         <h3 className="font-semibold text-2xl mb-3">음식 옵션 정보</h3>
+        {/* 옵션 추가 */}
+        <span
+          onClick={onAddOptionClick}
+          className="cursor-pointer text-white bg-gray-900 py-1 px-2 mt-5 bg-"
+        >
+          옵션 추가
+        </span>
         <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
           <div className="text-center text-lg font-bold">옵션 이름</div>
           <div className="text-center text-lg font-bold">추가 요금</div>
@@ -225,9 +256,36 @@ export const DishForm: React.FC<IDishFormProps> = ({
               />
             </div>
           ))}
+
+        {optionsNumbers.length !== 0 &&
+          optionsNumbers.map((id) => (
+            <div key={id} className="grid grid-cols-3 mt-5">
+              <input
+                ref={register}
+                name={`${id}-optionName`}
+                className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
+                type="text"
+                placeholder="Option Name"
+              />
+              <input
+                ref={register}
+                name={`${id}-optionExtra`}
+                className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
+                type="number"
+                min={0}
+                placeholder="Option Extra"
+              />
+              <span
+                className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 bg-"
+                onClick={() => onOptionDeleteClick(id)}
+              >
+                Delete Option
+              </span>
+            </div>
+          ))}
       </div>
 
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mt-8">
         <h3 className="font-semibold text-2xl mb-3">음식 재료 정보</h3>
         <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
           <div className="text-center text-lg font-bold">재료 이름</div>
@@ -265,7 +323,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
       <Button
         loading={editDishLoading}
         canClick={formState.isValid}
-        actionText="Edit Dish"
+        actionText="수정하기"
       />
     </form>
   );

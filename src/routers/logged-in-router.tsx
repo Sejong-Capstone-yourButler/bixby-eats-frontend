@@ -24,6 +24,7 @@ import { EditProfile } from "../pages/user/edit-profile";
 
 import { UserRole } from "../__generated__/globalTypes";
 import { EditDish } from "../pages/owner/edit-dish";
+import { AddDishOption } from "../pages/owner/add-dishOption";
 
 const clientRoutes = [
   {
@@ -59,6 +60,14 @@ const restaurantRoutes = [
     path: "/restaurants/:restaurantId/dish/:dishId/edit-dish",
     component: <EditDish />,
   },
+  {
+    path: "/restaurants/:restaurantId/dish/:dishId/add-dishOption",
+    component: <AddDishOption />,
+  },
+  // {
+  //   path: "/restaurants/:restaurantId/dish/:dishId/add-dishIngredients",
+  //   component: <AddDishIngredients />,
+  // },
   {
     path: "/restaurants/:restaurantId/stocks",
     component: <EditStock />,
