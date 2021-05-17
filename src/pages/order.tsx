@@ -48,9 +48,8 @@ interface IParams {
 export const Order = () => {
   const params = useParams<IParams>();
   const { data: userData } = useMe();
-  const [editOrderMutation] = useMutation<editOrder, editOrderVariables>(
-    EDIT_ORDER
-  );
+  const [editOrderMutation] =
+    useMutation<editOrder, editOrderVariables>(EDIT_ORDER);
   const { data, subscribeToMore } = useQuery<getOrder, getOrderVariables>(
     GET_ORDER,
     {
@@ -88,7 +87,7 @@ export const Order = () => {
         },
       });
     }
-  }, [data]);
+  }, [data, subscribeToMore, params.id]);
   const onButtonClick = (newStatus: OrderStatus) => {
     editOrderMutation({
       variables: {
