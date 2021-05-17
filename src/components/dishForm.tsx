@@ -118,6 +118,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
     ingredientCounts[index] = value;
     setIngredientCounts(ingredientCounts.map((ingredient) => ingredient));
   };
+
   const onSubmit = () => {
     const { name, price, description, ...rest } = getValues();
     const optionObjects = options?.map((option) => {
@@ -152,122 +153,120 @@ export const DishForm: React.FC<IDishFormProps> = ({
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mb-20">
-        <div className="flex flex-col items-center">
-          <h3 className="font-semibold text-2xl mb-3">기본 정보</h3>
-          <div className="grid grid-cols-3 max-w-screen-lg gap-3 my-5 w-full">
-            <div className="text-center text-lg font-bold">메뉴 이름</div>
-            <div className="text-center text-lg font-bold">가격</div>
-            <div className="text-center text-lg font-bold">설명</div>
-          </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mb-20">
+      <div className="flex flex-col items-center">
+        <h3 className="font-semibold text-2xl mb-3">기본 정보</h3>
+        <div className="grid grid-cols-3 max-w-screen-lg gap-3 my-5 w-full">
+          <div className="text-center text-lg font-bold">메뉴 이름</div>
+          <div className="text-center text-lg font-bold">가격</div>
+          <div className="text-center text-lg font-bold">설명</div>
         </div>
-        <div className="grid grid-cols-3 gap-3 mb-5 max-w-screen-lg w-full">
-          <input
-            className="input"
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={pName}
-            onChange={onChangeName}
-            ref={register({ required: "Name is required." })}
-          />
-          <input
-            className="input"
-            type="number"
-            name="price"
-            min={0}
-            placeholder="Price"
-            value={pPrice}
-            onChange={onChangePrice}
-            ref={register({ required: "Price is required." })}
-          />
-          <input
-            className="input"
-            type="text"
-            name="description"
-            placeholder="Description"
-            value={pDescription}
-            onChange={onChangeDescription}
-            ref={register({ required: "Description is required." })}
-          />
-        </div>
-        <div className="flex flex-col items-center">
-          <h3 className="font-semibold text-2xl mb-3">음식 옵션 정보</h3>
-          <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
-            <div className="text-center text-lg font-bold">옵션 이름</div>
-            <div className="text-center text-lg font-bold">추가 요금</div>
-          </div>
-          {options &&
-            options?.map((option, index) => (
-              <div
-                key={option.name}
-                className="grid grid-cols-2 gap-3 mb-5 max-w-screen-lg w-full"
-              >
-                <input
-                  className="input"
-                  type="text"
-                  ref={register}
-                  name={`${option.name}-optionName`}
-                  placeholder="옵션 이름"
-                  value={optionNames[index]}
-                  onChange={(e) => onChangeOptionName(e, index)}
-                />
-                <input
-                  className="input"
-                  type="number"
-                  name={`${option.name}-optionExtra`}
-                  placeholder="추가 요금"
-                  value={optionExtras && optionExtras[index]}
-                  min={0}
-                  onChange={(e) => onChangeOptionExtra(e, index)}
-                  ref={register}
-                />
-              </div>
-            ))}
-        </div>
-
-        <div className="flex flex-col items-center">
-          <h3 className="font-semibold text-2xl mb-3">음식 재료 정보</h3>
-          <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
-            <div className="text-center text-lg font-bold">재료 이름</div>
-            <div className="text-center text-lg font-bold">재료 개수</div>
-          </div>
-          {ingredients &&
-            ingredients?.map((ingredient, index) => (
-              <div
-                key={ingredient.id}
-                className="grid grid-cols-2 gap-3 mb-5 max-w-screen-lg w-full"
-              >
-                <input
-                  className="input"
-                  type="text"
-                  name={`${ingredient.id}-ingredientName`}
-                  placeholder="재료 이름"
-                  value={ingredientNames[index]}
-                  onChange={(e) => onChangeIngredientName(e, index)}
-                  ref={register}
-                />
-                <input
-                  className="input"
-                  type="number"
-                  name={`${ingredient.id}-ingredientCount`}
-                  placeholder="재료 개수"
-                  value={ingredientCounts[index]}
-                  min={0}
-                  onChange={(e) => onChangeIngredientCount(e, index)}
-                  ref={register}
-                />
-              </div>
-            ))}
-        </div>
-
-        <Button
-          loading={editDishLoading}
-          canClick={formState.isValid}
-          actionText="Edit Dish"
+      </div>
+      <div className="grid grid-cols-3 gap-3 mb-5 max-w-screen-lg w-full">
+        <input
+          className="input"
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={pName}
+          onChange={onChangeName}
+          ref={register({ required: "Name is required." })}
         />
-      </form>
-    </div>
+        <input
+          className="input"
+          type="number"
+          name="price"
+          min={0}
+          placeholder="Price"
+          value={pPrice}
+          onChange={onChangePrice}
+          ref={register({ required: "Price is required." })}
+        />
+        <input
+          className="input"
+          type="text"
+          name="description"
+          placeholder="Description"
+          value={pDescription}
+          onChange={onChangeDescription}
+          ref={register({ required: "Description is required." })}
+        />
+      </div>
+      <div className="flex flex-col items-center">
+        <h3 className="font-semibold text-2xl mb-3">음식 옵션 정보</h3>
+        <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
+          <div className="text-center text-lg font-bold">옵션 이름</div>
+          <div className="text-center text-lg font-bold">추가 요금</div>
+        </div>
+        {options &&
+          options?.map((option, index) => (
+            <div
+              key={option.name}
+              className="grid grid-cols-2 gap-3 mb-5 max-w-screen-lg w-full"
+            >
+              <input
+                className="input"
+                type="text"
+                ref={register}
+                name={`${option.name}-optionName`}
+                placeholder="옵션 이름"
+                value={optionNames[index]}
+                onChange={(e) => onChangeOptionName(e, index)}
+              />
+              <input
+                className="input"
+                type="number"
+                name={`${option.name}-optionExtra`}
+                placeholder="추가 요금"
+                value={optionExtras && optionExtras[index]}
+                min={0}
+                onChange={(e) => onChangeOptionExtra(e, index)}
+                ref={register}
+              />
+            </div>
+          ))}
+      </div>
+
+      <div className="flex flex-col items-center">
+        <h3 className="font-semibold text-2xl mb-3">음식 재료 정보</h3>
+        <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
+          <div className="text-center text-lg font-bold">재료 이름</div>
+          <div className="text-center text-lg font-bold">재료 개수</div>
+        </div>
+        {ingredients &&
+          ingredients?.map((ingredient, index) => (
+            <div
+              key={ingredient.id}
+              className="grid grid-cols-2 gap-3 mb-5 max-w-screen-lg w-full"
+            >
+              <input
+                className="input"
+                type="text"
+                name={`${ingredient.id}-ingredientName`}
+                placeholder="재료 이름"
+                value={ingredientNames[index]}
+                onChange={(e) => onChangeIngredientName(e, index)}
+                ref={register}
+              />
+              <input
+                className="input"
+                type="number"
+                name={`${ingredient.id}-ingredientCount`}
+                placeholder="재료 개수"
+                value={ingredientCounts[index]}
+                min={0}
+                onChange={(e) => onChangeIngredientCount(e, index)}
+                ref={register}
+              />
+            </div>
+          ))}
+      </div>
+
+      <Button
+        loading={editDishLoading}
+        canClick={formState.isValid}
+        actionText="Edit Dish"
+      />
+    </form>
   );
 };
