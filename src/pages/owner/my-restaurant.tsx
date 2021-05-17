@@ -115,7 +115,7 @@ export const MyRestaurant = () => {
     if (subscriptionData?.pendingOrders.id) {
       history.push(`/orders/${subscriptionData.pendingOrders.id}`);
     }
-  }, [subscriptionData]);
+  }, [subscriptionData, history]);
   const userRole = data?.myRestaurant.restaurant?.owner.role;
   return (
     <div>
