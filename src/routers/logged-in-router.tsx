@@ -14,7 +14,6 @@ import { Search } from "../pages/client/search";
 import { Dashboard } from "../pages/driver/dashboard";
 
 import { AddDish } from "../pages/owner/add-dish";
-import { EditDish } from "../pages/owner/edit-dish";
 import { AddRestaurant } from "../pages/owner/add-restaurants";
 import { EditStock } from "../pages/owner/edit-stock";
 import { MyRestaurant } from "../pages/owner/my-restaurant";
@@ -24,6 +23,7 @@ import { ConfirmEmail } from "../pages/user/confirm-email";
 import { EditProfile } from "../pages/user/edit-profile";
 
 import { UserRole } from "../__generated__/globalTypes";
+import { EditDish } from "../pages/owner/edit-dish";
 
 const clientRoutes = [
   {
@@ -56,7 +56,7 @@ const restaurantRoutes = [
   { path: "/restaurants/:id", component: <MyRestaurant /> },
   { path: "/restaurants/:restaurantId/add-dish", component: <AddDish /> },
   {
-    path: "/restaurants/:restaurantId/edit-dish",
+    path: "/restaurants/:restaurantId/dish/:dishId/edit-dish",
     component: <EditDish />,
   },
   {

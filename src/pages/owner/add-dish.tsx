@@ -1,5 +1,5 @@
-import { gql, useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { gql, useMutation } from "@apollo/client";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -48,15 +48,10 @@ export const AddDish = () => {
       },
     ],
   });
-  const {
-    register,
-    handleSubmit,
-    formState,
-    getValues,
-    setValue,
-  } = useForm<IForm>({
-    mode: "onChange",
-  });
+  const { register, handleSubmit, formState, getValues, setValue } =
+    useForm<IForm>({
+      mode: "onChange",
+    });
   const onSubmit = () => {
     const { name, price, description, ...rest } = getValues();
     const ingredientsObjects = ingredientsNumber.map((theId) => ({

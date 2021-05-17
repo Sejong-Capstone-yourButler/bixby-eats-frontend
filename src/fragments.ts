@@ -38,6 +38,14 @@ export const DISH_FRAGMENT = gql`
         extra
       }
     }
+    ingredients {
+      id
+      stock {
+        id
+        name
+      }
+      count
+    }
   }
 `;
 

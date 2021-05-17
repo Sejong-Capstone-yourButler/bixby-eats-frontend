@@ -23,8 +23,21 @@ export interface myRestaurant_myRestaurant_restaurant_menu_options_choices {
 export interface myRestaurant_myRestaurant_restaurant_menu_options {
   __typename: "DishOption";
   name: string;
-  extra: number | null;
+  extra: number;
   choices: myRestaurant_myRestaurant_restaurant_menu_options_choices[] | null;
+}
+
+export interface myRestaurant_myRestaurant_restaurant_menu_ingredients_stock {
+  __typename: "Stock";
+  id: number;
+  name: string;
+}
+
+export interface myRestaurant_myRestaurant_restaurant_menu_ingredients {
+  __typename: "Ingredient";
+  id: number;
+  stock: myRestaurant_myRestaurant_restaurant_menu_ingredients_stock;
+  count: number;
 }
 
 export interface myRestaurant_myRestaurant_restaurant_menu {
@@ -35,6 +48,7 @@ export interface myRestaurant_myRestaurant_restaurant_menu {
   photo: string | null;
   description: string;
   options: myRestaurant_myRestaurant_restaurant_menu_options[] | null;
+  ingredients: myRestaurant_myRestaurant_restaurant_menu_ingredients[];
 }
 
 export interface myRestaurant_myRestaurant_restaurant_orders {

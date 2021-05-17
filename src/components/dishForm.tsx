@@ -1,23 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory, useLocation } from "react-router-dom";
 import { Button } from "./button";
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import { editDish, editDishVariables } from "../__generated__/editDish";
-import { deleteDish, deleteDishVariables } from "../__generated__/deleteDish";
+
+import {
+  getDish_getDish_dish_ingredients,
+  getDish_getDish_dish_options,
+} from "../__generated__/getDish";
 
 interface IDishFormProps {
   id: string;
-  name: string;
-  price: number | null;
-  description: string | null;
+  name: string | undefined;
+  price: number | undefined;
+  description?: string | undefined;
+  options?: getDish_getDish_dish_options[] | null;
+  ingredients?: getDish_getDish_dish_ingredients[];
 }
 
 interface IForm {
   name: string;
-  price: number;
+  price: string;
   description: string;
+  [key: string]: string;
 }
 
 const EDIT_DISH_MUTATION = gql`
@@ -29,46 +35,37 @@ const EDIT_DISH_MUTATION = gql`
   }
 `;
 
-const DELETE_DISH_MUTATION = gql`
-  mutation deleteDish($input: DeleteDishInput!) {
-    deleteDish(input: $input) {
-      error
-      ok
-    }
-  }
-`;
-
 export const DishForm: React.FC<IDishFormProps> = ({
   id,
   name,
   price,
   description,
+  options,
+  ingredients,
 }) => {
-  const history = useHistory();
-  const location = useLocation();
-  const onCompleted = (data: deleteDish) => {
-    const {
-      deleteDish: { ok, error },
-    } = data;
-    if (ok) {
-      // delete를 누르면 해당 목록이 삭제되도록 조치
-      history.push(location.pathname);
-    }
-  };
   const [editDishMutation, { loading: editDishLoading }] =
     useMutation<editDish, editDishVariables>(EDIT_DISH_MUTATION);
-  const [deleteDishMutation, { loading: deleteDishLoading }] = useMutation<
-    deleteDish,
-    deleteDishVariables
-  >(DELETE_DISH_MUTATION, { onCompleted });
   const { register, handleSubmit, formState, getValues } = useForm<IForm>({
     mode: "onChange",
   });
-
-  const [pName, setName] = useState<string>(name);
+  const [pName, setName] = useState<string>(name ? name : "");
   const [pPrice, setPrice] = useState<number>(price ? price : 0);
   const [pDescription, setDescription] = useState<string>(
     description ? description : ""
+  );
+
+  const [optionNames, setOptionNames] = useState<string[]>(
+    options!.map((option) => option!.name)
+  );
+  const [optionExtras, setOptionExtras] = useState<number[]>(
+    options!.map((option) => option!.extra)
+  );
+
+  const [ingredientNames, setIngredientNames] = useState<string[]>(
+    ingredients!.map((ingredient) => ingredient!.stock!.name)
+  );
+  const [ingredientCounts, setIngredientCounts] = useState<number[]>(
+    ingredients!.map((ingredient) => ingredient!.count)
   );
 
   const onChangeName = (e: any) => {
@@ -89,8 +86,57 @@ export const DishForm: React.FC<IDishFormProps> = ({
     } = e;
     setDescription(value);
   };
+
+  const onChangeOptionName = (e: any, index: number) => {
+    const {
+      target: { value },
+    } = e;
+    optionNames[index] = value;
+    setOptionNames(optionNames.map((optionName) => optionName));
+  };
+
+  const onChangeOptionExtra = (e: any, index: number) => {
+    const {
+      target: { value },
+    } = e;
+    optionExtras[index] = value;
+    setOptionExtras(optionExtras.map((optionExtra) => optionExtra));
+  };
+
+  const onChangeIngredientName = (e: any, index: number) => {
+    const {
+      target: { value },
+    } = e;
+    ingredientNames[index] = value;
+    setIngredientNames(ingredientNames.map((ingredient) => ingredient));
+  };
+
+  const onChangeIngredientCount = (e: any, index: number) => {
+    const {
+      target: { value },
+    } = e;
+    ingredientCounts[index] = value;
+    setIngredientCounts(ingredientCounts.map((ingredient) => ingredient));
+  };
   const onSubmit = () => {
-    const { name, price, description } = getValues();
+    const { name, price, description, ...rest } = getValues();
+    const optionObjects = options?.map((option) => {
+      return {
+        name: rest[`${option.name}-optionName`],
+        extra: +rest[`${option.name}-optionExtra`],
+      };
+    });
+    const ingredientObjects = ingredients?.map((ingredient) => {
+      return {
+        ingredientId: ingredient.id,
+        stock: {
+          stockId: ingredient.stock.id,
+          name: rest[`${ingredient.id}-ingredientName`],
+        },
+        count: +rest[`${ingredient.id}-ingredientCount`],
+      };
+    });
+
     editDishMutation({
       variables: {
         input: {
@@ -98,65 +144,134 @@ export const DishForm: React.FC<IDishFormProps> = ({
           price: +price,
           description,
           dishId: +id,
+          options: optionObjects,
+          ingredients: ingredientObjects,
         },
       },
     });
   };
-  const deleteBtn = () => {
-    deleteDishMutation({
-      variables: {
-        input: {
-          dishId: +id,
-        },
-      },
-    });
-  };
+
   return (
-    <div className="grid grid-cols-5 gap-3 mb-5 max-w-screen-lg w-full">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-4 col-span-4 gap-3"
-      >
-        <input
-          className="input"
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={pName}
-          onChange={onChangeName}
-          ref={register({ required: "Name is required." })}
-        />
-        <input
-          className="input"
-          type="number"
-          name="price"
-          min={0}
-          placeholder="Price"
-          value={pPrice}
-          onChange={onChangePrice}
-          ref={register({ required: "Price is required." })}
-        />
-        <input
-          className="input"
-          type="text"
-          name="description"
-          placeholder="Description"
-          value={pDescription}
-          onChange={onChangeDescription}
-          ref={register({ required: "Description is required." })}
-        />
+    <div>
+      {options &&
+        options.map((option) => {
+          <h1>{option.name}</h1>;
+        })}
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mb-20">
+        <div className="flex flex-col items-center">
+          <h3 className="font-semibold text-2xl mb-3">기본 정보</h3>
+          <div className="grid grid-cols-3 max-w-screen-lg gap-3 my-5 w-full">
+            <div className="text-center text-lg font-bold">메뉴 이름</div>
+            <div className="text-center text-lg font-bold">가격</div>
+            <div className="text-center text-lg font-bold">설명</div>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-3 mb-5 max-w-screen-lg w-full">
+          <input
+            className="input"
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={pName}
+            onChange={onChangeName}
+            ref={register({ required: "Name is required." })}
+          />
+          <input
+            className="input"
+            type="number"
+            name="price"
+            min={0}
+            placeholder="Price"
+            value={pPrice}
+            onChange={onChangePrice}
+            ref={register({ required: "Price is required." })}
+          />
+          <input
+            className="input"
+            type="text"
+            name="description"
+            placeholder="Description"
+            value={pDescription}
+            onChange={onChangeDescription}
+            ref={register({ required: "Description is required." })}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <h3 className="font-semibold text-2xl mb-3">음식 옵션 정보</h3>
+          <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
+            <div className="text-center text-lg font-bold">옵션 이름</div>
+            <div className="text-center text-lg font-bold">추가 요금</div>
+          </div>
+          {options &&
+            options?.map((option, index) => (
+              <div
+                key={option.name}
+                className="grid grid-cols-2 gap-3 mb-5 max-w-screen-lg w-full"
+              >
+                <input
+                  className="input"
+                  type="text"
+                  ref={register}
+                  name={`${option.name}-optionName`}
+                  placeholder="옵션 이름"
+                  value={optionNames[index]}
+                  onChange={(e) => onChangeOptionName(e, index)}
+                />
+                <input
+                  className="input"
+                  type="number"
+                  name={`${option.name}-optionExtra`}
+                  placeholder="추가 요금"
+                  value={optionExtras && optionExtras[index]}
+                  min={0}
+                  onChange={(e) => onChangeOptionExtra(e, index)}
+                  ref={register}
+                />
+              </div>
+            ))}
+        </div>
+
+        <div className="flex flex-col items-center">
+          <h3 className="font-semibold text-2xl mb-3">음식 재료 정보</h3>
+          <div className="grid grid-cols-2 max-w-screen-lg gap-3 my-5 w-full">
+            <div className="text-center text-lg font-bold">재료 이름</div>
+            <div className="text-center text-lg font-bold">재료 개수</div>
+          </div>
+          {ingredients &&
+            ingredients?.map((ingredient, index) => (
+              <div
+                key={ingredient.id}
+                className="grid grid-cols-2 gap-3 mb-5 max-w-screen-lg w-full"
+              >
+                <input
+                  className="input"
+                  type="text"
+                  name={`${ingredient.id}-ingredientName`}
+                  placeholder="재료 이름"
+                  value={ingredientNames[index]}
+                  onChange={(e) => onChangeIngredientName(e, index)}
+                  ref={register}
+                />
+                <input
+                  className="input"
+                  type="number"
+                  name={`${ingredient.id}-ingredientCount`}
+                  placeholder="재료 개수"
+                  value={ingredientCounts[index]}
+                  min={0}
+                  onChange={(e) => onChangeIngredientCount(e, index)}
+                  ref={register}
+                />
+              </div>
+            ))}
+        </div>
+
         <Button
           loading={editDishLoading}
           canClick={formState.isValid}
           actionText="Edit Dish"
         />
       </form>
-      <button
-        className="text-lg font-medium focus:outline-none text-white py-4  transition-colors bg-red-600 hover:bg-red-700"
-        onClick={deleteBtn}
-      >
-        {deleteDishLoading ? "Loading..." : "Delete Dish"}
-      </button>
     </div>
   );
 };

@@ -26,6 +26,13 @@ export interface CategoryInput {
   slug: string;
 }
 
+export interface CategoryInputType {
+  name: string;
+  coverImg?: string | null;
+  slug: string;
+  restaurants?: RestaurantInputType[] | null;
+}
+
 export interface CreateAccountInput {
   email: string;
   password: string;
@@ -72,10 +79,20 @@ export interface DishChoiceInputType {
   extra?: number | null;
 }
 
+export interface DishInputType {
+  name: string;
+  price: number;
+  photo?: string | null;
+  description: string;
+  restaurant: RestaurantInputType;
+  options?: DishOptionInputType[] | null;
+  ingredients: IngredientInputType[];
+}
+
 export interface DishOptionInputType {
   name: string;
   choices?: DishChoiceInputType[] | null;
-  extra?: number | null;
+  extra: number;
 }
 
 export interface EditDishInput {
@@ -83,6 +100,7 @@ export interface EditDishInput {
   price?: number | null;
   description?: string | null;
   options?: DishOptionInputType[] | null;
+  ingredients?: IngredientInputType[] | null;
   dishId: number;
 }
 
@@ -104,6 +122,10 @@ export interface EditStockInput {
   stockId: number;
 }
 
+export interface GetDishInput {
+  dishId: number;
+}
+
 export interface GetIncomesInput {
   restaurantId: number;
 }
@@ -116,6 +138,18 @@ export interface GetStocksInput {
   id: number;
 }
 
+export interface IncomeInputType {
+  createdAtString: string;
+  income?: number | null;
+  restaurant?: RestaurantInputType | null;
+}
+
+export interface IngredientInputType {
+  ingredientId: number;
+  stock: StockInputType;
+  count: number;
+}
+
 export interface LoginInput {
   email: string;
   password: string;
@@ -123,6 +157,21 @@ export interface LoginInput {
 
 export interface MyRestaurantInput {
   id: number;
+}
+
+export interface OrderInputType {
+  createdAtString: string;
+  customer?: UserInputType | null;
+  driver?: UserInputType | null;
+  restaurant?: RestaurantInputType | null;
+  items: OrderItemInputType[];
+  total?: number | null;
+  status: OrderStatus;
+}
+
+export interface OrderItemInputType {
+  dish: DishInputType;
+  options?: OrderItemOptionInputType[] | null;
 }
 
 export interface OrderItemOptionInputType {
@@ -134,8 +183,29 @@ export interface OrderUpdatesInput {
   id: number;
 }
 
+export interface PaymentInputType {
+  transactionId: string;
+  user: UserInputType;
+  restaurant: RestaurantInputType;
+  restaurantId: number;
+}
+
 export interface RestaurantInput {
   restaurantId: number;
+}
+
+export interface RestaurantInputType {
+  name: string;
+  coverImg: string;
+  address: string;
+  category?: CategoryInputType | null;
+  owner: UserInputType;
+  orders: OrderInputType[];
+  menu: DishInputType[];
+  stock: StockInputType[];
+  incomes: IncomeInputType[];
+  isPromoted: boolean;
+  promotedUntil?: any | null;
 }
 
 export interface RestaurantsInput {
@@ -147,8 +217,29 @@ export interface SearchRestaurantInput {
   query: string;
 }
 
+export interface StockInputType {
+  stockId: number;
+  name: string;
+  count?: number | null;
+  price?: number | null;
+  description?: string | null;
+  restaurant?: RestaurantInputType | null;
+  ingredients?: IngredientInputType[] | null;
+}
+
 export interface TakeOrderInput {
   id: number;
+}
+
+export interface UserInputType {
+  email: string;
+  password: string;
+  role: UserRole;
+  verified: boolean;
+  restaurants: RestaurantInputType[];
+  orders: OrderInputType[];
+  payments: PaymentInputType[];
+  rides: OrderInputType[];
 }
 
 export interface VerifyEmailInput {

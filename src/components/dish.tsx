@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import React from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { MY_RESTAURANT_QUERY } from "../pages/owner/my-restaurant";
 import { deleteDish, deleteDishVariables } from "../__generated__/deleteDish";
 import { UserRole } from "../__generated__/globalTypes";
@@ -24,7 +24,7 @@ interface IParams {
   id: string;
 }
 
-const DELETE_DISH_MUTATION = gql`
+export const DELETE_DISH_MUTATION = gql`
   mutation deleteDish($input: DeleteDishInput!) {
     deleteDish(input: $input) {
       error
@@ -105,7 +105,7 @@ export const Dish: React.FC<IDishProps> = ({
           {userRole && userRole === "Owner" && (
             <>
               <Link
-                to={`/restaurants/${id}/edit-dish`}
+                to={`/restaurants/${restaurantId}/dish/${id}/edit-dish`}
                 className={`ml-3 py-1 px-3 focus:outline-none text-sm bg-lime-600 text-white`}
               >
                 Edit

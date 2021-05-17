@@ -37,10 +37,8 @@ export const StockForm: React.FC<IStockFormProps> = ({
   count,
   description,
 }) => {
-  const [editStockMutation, { loading }] = useMutation<
-    editStock,
-    editStockVariables
-  >(EDIT_STOCK_MUTATION);
+  const [editStockMutation, { loading }] =
+    useMutation<editStock, editStockVariables>(EDIT_STOCK_MUTATION);
   const { register, handleSubmit, formState, getValues } = useForm<IForm>({
     mode: "onChange",
   });
@@ -52,7 +50,6 @@ export const StockForm: React.FC<IStockFormProps> = ({
     description ? description : ""
   );
 
-  const history = useHistory();
   const onChangeName = (e: any) => {
     const {
       target: { value },

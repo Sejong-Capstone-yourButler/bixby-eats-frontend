@@ -142,12 +142,6 @@ export const MyRestaurant = () => {
             Add Dish &rarr;
           </Link>
           <Link
-            to={`/restaurants/${id}/edit-dish`}
-            className="mb-2 lg:mr-8 bg-yellow-400 myRestaurantButton"
-          >
-            Edit Dish &rarr;
-          </Link>
-          <Link
             to={`/restaurants/${id}/stocks`}
             className="lg:mr-8 bg-lime-700 myRestaurantButton"
           >
