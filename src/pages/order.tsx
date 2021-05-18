@@ -23,15 +23,6 @@ const GET_ORDER = gql`
   ${FULL_ORDER_FRAGMENT}
 `;
 
-const ORDER_SUBSCRIPTION = gql`
-  subscription orderUpdates($input: OrderUpdatesInput!) {
-    orderUpdates(input: $input) {
-      ...FullOrderParts
-    }
-  }
-  ${FULL_ORDER_FRAGMENT}
-`;
-
 const EDIT_ORDER = gql`
   mutation editOrder($input: EditOrderInput!) {
     editOrder(input: $input) {
@@ -39,6 +30,15 @@ const EDIT_ORDER = gql`
       error
     }
   }
+`;
+
+const ORDER_SUBSCRIPTION = gql`
+  subscription orderUpdates($input: OrderUpdatesInput!) {
+    orderUpdates(input: $input) {
+      ...FullOrderParts
+    }
+  }
+  ${FULL_ORDER_FRAGMENT}
 `;
 
 interface IParams {
@@ -101,37 +101,37 @@ export const Order = () => {
   return (
     <div className="mt-32 container flex justify-center">
       <Helmet>
-        <title>Order #{params.id} | Bixby Eats</title>
+        <title>주문 #{params.id} | Bixby Eats</title>
       </Helmet>
       <div className="border border-gray-800 w-full max-w-screen-sm flex flex-col justify-center">
         <h4 className="bg-gray-800 w-full py-5 text-white text-center text-xl">
-          Order #{params.id}
+          주문 #{params.id}
         </h4>
         <h5 className="p-5 pt-10 text-3xl text-center ">
           ${data?.getOrder.order?.total}
         </h5>
         <div className="p-5 text-xl grid gap-6">
           <div className="border-t pt-5 border-gray-700">
-            Prepared By:{" "}
+            가게 :{" "}
             <span className="font-medium">
               {data?.getOrder.order?.restaurant?.name}
             </span>
           </div>
           <div className="border-t pt-5 border-gray-700 ">
-            Deliver To:{" "}
+            고객 :{" "}
             <span className="font-medium">
               {data?.getOrder.order?.customer?.email}
             </span>
           </div>
           <div className="border-t border-b py-5 border-gray-700">
-            Driver:{" "}
+            배달원 :{" "}
             <span className="font-medium">
-              {data?.getOrder.order?.driver?.email || "Not yet."}
+              {data?.getOrder.order?.driver?.email || "배달 미정"}
             </span>
           </div>
           {userData?.me.role === UserRole.Client && (
             <span className=" text-center mt-5 mb-3  text-2xl text-lime-600">
-              Status: {data?.getOrder.order?.status}
+              상태 : {data?.getOrder.order?.status}
             </span>
           )}
           {userData?.me.role === UserRole.Owner && (
@@ -141,7 +141,7 @@ export const Order = () => {
                   onClick={() => onButtonClick(OrderStatus.Cooking)}
                   className="btn"
                 >
-                  Accept Order
+                  주문 수락
                 </button>
               )}
               {data?.getOrder.order?.status === OrderStatus.Cooking && (
