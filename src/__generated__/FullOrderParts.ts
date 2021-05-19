@@ -22,6 +22,8 @@ export interface FullOrderParts_customer {
 export interface FullOrderParts_restaurant {
   __typename: "Restaurant";
   name: string;
+  lat: number;
+  lng: number;
 }
 
 export interface FullOrderParts {

@@ -74,8 +74,10 @@ export const Map = () => {
           // 가게 위치
           destination: {
             location: new google.maps.LatLng(
-              driverCoords.lat + 0.05,
-              driverCoords.lng + 0.05
+              // @ts-ignore
+              coockedOrdersData?.cookedOrders.restaurant.lat,
+              // @ts-ignore
+              coockedOrdersData?.cookedOrders.restaurant.lng
             ),
           },
           travelMode: google.maps.TravelMode.TRANSIT,

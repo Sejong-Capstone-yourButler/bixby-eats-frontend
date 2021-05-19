@@ -22,6 +22,8 @@ export interface pendingOrders_pendingOrders_customer {
 export interface pendingOrders_pendingOrders_restaurant {
   __typename: "Restaurant";
   name: string;
+  lat: number;
+  lng: number;
 }
 
 export interface pendingOrders_pendingOrders {

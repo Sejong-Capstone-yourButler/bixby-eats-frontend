@@ -70,6 +70,8 @@ export interface myRestaurant_myRestaurant_restaurant {
   id: number;
   name: string;
   coverImg: string;
+  lat: number;
+  lng: number;
   category: myRestaurant_myRestaurant_restaurant_category | null;
   address: string;
   isPromoted: boolean;

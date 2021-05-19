@@ -82,7 +82,6 @@ export const AddRestaurant = () => {
   // 위치 값 가져오기
   // @ts-ignore
   const onSucces = ({ coords: { latitude, longitude } }: Position) => {
-    console.log(latitude, longitude);
     setLat(latitude);
     setLng(longitude);
   };

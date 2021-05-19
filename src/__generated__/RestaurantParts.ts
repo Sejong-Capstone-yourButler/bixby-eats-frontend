@@ -17,6 +17,8 @@ export interface RestaurantParts {
   id: number;
   name: string;
   coverImg: string;
+  lat: number;
+  lng: number;
   category: RestaurantParts_category | null;
   address: string;
   isPromoted: boolean;

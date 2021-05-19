@@ -22,6 +22,8 @@ export interface getOrder_getOrder_order_customer {
 export interface getOrder_getOrder_order_restaurant {
   __typename: "Restaurant";
   name: string;
+  lat: number;
+  lng: number;
 }
 
 export interface getOrder_getOrder_order {

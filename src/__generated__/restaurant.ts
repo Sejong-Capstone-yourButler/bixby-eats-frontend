@@ -56,6 +56,8 @@ export interface restaurant_restaurant_restaurant {
   id: number;
   name: string;
   coverImg: string;
+  lat: number;
+  lng: number;
   category: restaurant_restaurant_restaurant_category | null;
   address: string;
   isPromoted: boolean;

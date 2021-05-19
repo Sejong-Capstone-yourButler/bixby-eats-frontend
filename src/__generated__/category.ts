@@ -19,6 +19,8 @@ export interface category_category_restaurants {
   id: number;
   name: string;
   coverImg: string;
+  lat: number;
+  lng: number;
   category: category_category_restaurants_category | null;
   address: string;
   isPromoted: boolean;

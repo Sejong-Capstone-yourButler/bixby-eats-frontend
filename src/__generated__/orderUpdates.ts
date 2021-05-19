@@ -22,6 +22,8 @@ export interface orderUpdates_orderUpdates_customer {
 export interface orderUpdates_orderUpdates_restaurant {
   __typename: "Restaurant";
   name: string;
+  lat: number;
+  lng: number;
 }
 
 export interface orderUpdates_orderUpdates {

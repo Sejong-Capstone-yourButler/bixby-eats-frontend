@@ -19,6 +19,8 @@ export interface searchRestaurant_searchRestaurant_restaurants {
   id: number;
   name: string;
   coverImg: string;
+  lat: number;
+  lng: number;
   category: searchRestaurant_searchRestaurant_restaurants_category | null;
   address: string;
   isPromoted: boolean;

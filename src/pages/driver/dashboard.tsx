@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
-import { gql, useMutation, useSubscription } from "@apollo/client";
+import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { FULL_ORDER_FRAGMENT } from "../../fragments";
 import { coockedOrders } from "../../__generated__/coockedOrders";
 import { Link, useHistory } from "react-router-dom";
@@ -40,9 +40,9 @@ export const Dashboard = () => {
   const [driverCoords, setDriverCoords] = useState<ICoords>({ lng: 0, lat: 0 });
   const [map, setMap] = useState<google.maps.Map>();
   const [maps, setMaps] = useState<any>();
+
   // @ts-ignore
   const onSucces = ({ coords: { latitude, longitude } }: Position) => {
-    console.log(latitude, longitude);
     setDriverCoords({ lat: latitude, lng: longitude });
   };
   // @ts-ignore
@@ -92,8 +92,10 @@ export const Dashboard = () => {
           // 가게 위치
           destination: {
             location: new google.maps.LatLng(
-              driverCoords.lat + 0.05,
-              driverCoords.lng + 0.05
+              // @ts-ignore
+              coockedOrdersData?.cookedOrders.restaurant.lat,
+              // @ts-ignore
+              coockedOrdersData?.cookedOrders.restaurant.lng
             ),
           },
           travelMode: google.maps.TravelMode.TRANSIT,

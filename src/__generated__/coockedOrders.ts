@@ -22,6 +22,8 @@ export interface coockedOrders_cookedOrders_customer {
 export interface coockedOrders_cookedOrders_restaurant {
   __typename: "Restaurant";
   name: string;
+  lat: number;
+  lng: number;
 }
 
 export interface coockedOrders_cookedOrders {
