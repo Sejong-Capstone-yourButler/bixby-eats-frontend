@@ -67,6 +67,8 @@ export interface CreateRestaurantInput {
   name: string;
   coverImg: string;
   address: string;
+  lat: number;
+  lng: number;
   categoryName: string;
 }
 
@@ -198,6 +200,8 @@ export interface RestaurantInputType {
   name: string;
   coverImg: string;
   address: string;
+  lat: number;
+  lng: number;
   category?: CategoryInputType | null;
   owner: UserInputType;
   orders: OrderInputType[];

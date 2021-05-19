@@ -76,10 +76,28 @@ export const AddRestaurant = () => {
     mode: "onChange",
   });
   const [uploading, setUploading] = useState(false);
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
+
+  // 위치 값 가져오기
+  // @ts-ignore
+  const onSucces = ({ coords: { latitude, longitude } }: Position) => {
+    console.log(latitude, longitude);
+    setLat(latitude);
+    setLng(longitude);
+  };
+  // @ts-ignore
+  const onError = (error: PositionError) => {
+    console.log(error);
+  };
+  navigator.geolocation.getCurrentPosition(onSucces, onError, {
+    enableHighAccuracy: true,
+  });
+
   const onSubmit = async () => {
     try {
       setUploading(true);
-      const { file, name, categoryName, address } = getValues();
+      const { name, address, categoryName, file } = getValues();
       const actualFile = file[0];
       const formBody = new FormData();
       formBody.append("file", actualFile);
@@ -90,6 +108,7 @@ export const AddRestaurant = () => {
         })
       ).json();
       setImageUrl(coverImg);
+
       createRestaurantMutation({
         variables: {
           input: {
@@ -97,6 +116,8 @@ export const AddRestaurant = () => {
             categoryName,
             address,
             coverImg,
+            lat,
+            lng,
           },
         },
       });
@@ -105,9 +126,9 @@ export const AddRestaurant = () => {
   return (
     <div className="container flex flex-col items-center mt-52">
       <Helmet>
-        <title>Add Restaurant | Bixby Eats</title>
+        <title>식당 추가 | Bixby Eats</title>
       </Helmet>
-      <h4 className="font-semibold text-2xl mb-3">Add Restaurant</h4>
+      <h4 className="font-semibold text-2xl mb-3">식당 추가</h4>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid max-w-screen-sm gap-3 mt-5 w-full mb-5"

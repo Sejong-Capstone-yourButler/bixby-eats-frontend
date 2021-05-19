@@ -31,11 +31,14 @@ export const Map = () => {
     console.log(error);
   };
   // 나의 위치 갖오기
+  // 실시간으로 나의 위치(driverCoords)를 갱신한다.
   useEffect(() => {
     navigator.geolocation.watchPosition(onSucces, onError, {
       enableHighAccuracy: true,
     });
   }, []);
+
+  // 나의 위치가 변경되면 지도에 반영한다.
   useEffect(() => {
     if (map && maps) {
       map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));

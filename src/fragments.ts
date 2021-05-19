@@ -5,6 +5,8 @@ export const RESTAURANT_FRAGMENT = gql`
     id
     name
     coverImg
+    lat
+    lng
     category {
       name
     }
