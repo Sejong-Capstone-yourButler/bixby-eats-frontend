@@ -12,11 +12,15 @@ import { OrderUpdatesInput, OrderStatus } from "./globalTypes";
 export interface orderUpdates_orderUpdates_driver {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface orderUpdates_orderUpdates_customer {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface orderUpdates_orderUpdates_restaurant {

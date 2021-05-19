@@ -12,11 +12,15 @@ import { OrderStatus } from "./globalTypes";
 export interface pendingOrders_pendingOrders_driver {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface pendingOrders_pendingOrders_customer {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface pendingOrders_pendingOrders_restaurant {

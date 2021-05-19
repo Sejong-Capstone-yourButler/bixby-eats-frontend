@@ -12,11 +12,15 @@ import { OrderStatus } from "./globalTypes";
 export interface FullOrderParts_driver {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface FullOrderParts_customer {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface FullOrderParts_restaurant {

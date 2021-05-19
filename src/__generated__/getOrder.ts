@@ -12,11 +12,15 @@ import { GetOrderInput, OrderStatus } from "./globalTypes";
 export interface getOrder_getOrder_order_driver {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface getOrder_getOrder_order_customer {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface getOrder_getOrder_order_restaurant {

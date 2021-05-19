@@ -51,7 +51,13 @@ interface IRestaurantParams {
 // useHistory는 change, replace, push를 통해 이곳 저곳 돌아다닐 수 있게 해준다.
 // useParams는 우리에게 parameter를 준다.
 export const Restaurant = () => {
+  const history = useHistory();
   const params = useParams<IRestaurantParams>();
+  const [orderStarted, setOrderStarted] = useState(false);
+  const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([]);
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
+
   const { data } = useQuery<restaurant, restaurantVariables>(RESTAURANT_QUERY, {
     variables: {
       input: {
@@ -59,8 +65,7 @@ export const Restaurant = () => {
       },
     },
   });
-  const [orderStarted, setOrderStarted] = useState(false);
-  const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([]);
+
   const triggerStartOrder = () => {
     setOrderStarted(true);
   };
@@ -137,7 +142,21 @@ export const Restaurant = () => {
     setOrderStarted(false);
     setOrderItems([]);
   };
-  const history = useHistory();
+
+  // 위치 값 가져오기
+  // @ts-ignore
+  const onSucces = ({ coords: { latitude, longitude } }: Position) => {
+    setLat(latitude);
+    setLng(longitude);
+  };
+  // @ts-ignore
+  const onError = (error: PositionError) => {
+    console.log(error);
+  };
+  navigator.geolocation.getCurrentPosition(onSucces, onError, {
+    enableHighAccuracy: true,
+  });
+
   const onCompleted = (data: createOrder) => {
     const {
       createOrder: { ok, orderId },
@@ -167,6 +186,8 @@ export const Restaurant = () => {
           input: {
             restaurantId: +params.id,
             items: orderItems,
+            lat,
+            lng,
           },
         },
       });

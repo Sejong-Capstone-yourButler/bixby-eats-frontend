@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
-import { gql, useSubscription } from "@apollo/client";
-import { FULL_ORDER_FRAGMENT } from "../fragments";
+import { gql, useMutation, useSubscription } from "@apollo/client";
 import { coockedOrders } from "../__generated__/coockedOrders";
 import { COOCKED_ORDERS_SUBSCRIPTION } from "../pages/driver/dashboard";
+import {
+  updateCoords,
+  updateCoordsVariables,
+} from "../__generated__/updateCoords";
 
 interface ICoords {
   lat: number;
@@ -17,21 +20,43 @@ interface IDriverProps {
 }
 const Driver: React.FC<IDriverProps> = () => <div className="text-lg">🚖</div>;
 
+export const UPDATE_COORDS = gql`
+  mutation updateCoords($input: UpdateCoordsInput!) {
+    updateCoords(input: $input) {
+      ok
+      error
+      lat
+      lng
+    }
+  }
+`;
+
 export const Map = () => {
-  const [driverCoords, setDriverCoords] = useState<ICoords>({ lng: 0, lat: 0 });
+  const [myCoords, setMyCoords] = useState<ICoords>({ lng: 0, lat: 0 });
   const [map, setMap] = useState<google.maps.Map>();
   const [maps, setMaps] = useState<any>();
+  const [updateCoordsMutation] =
+    useMutation<updateCoords, updateCoordsVariables>(UPDATE_COORDS);
+
   // @ts-ignore
   const onSucces = ({ coords: { latitude, longitude } }: Position) => {
     console.log(latitude, longitude);
-    setDriverCoords({ lat: latitude, lng: longitude });
+    setMyCoords({ lat: latitude, lng: longitude });
+    updateCoordsMutation({
+      variables: {
+        input: {
+          lat: latitude,
+          lng: longitude,
+        },
+      },
+    });
   };
   // @ts-ignore
   const onError = (error: PositionError) => {
     console.log(error);
   };
   // 나의 위치 갖오기
-  // 실시간으로 나의 위치(driverCoords)를 갱신한다.
+  // 실시간으로 나의 위치(myCoords)를 갱신한다.
   useEffect(() => {
     navigator.geolocation.watchPosition(onSucces, onError, {
       enableHighAccuracy: true,
@@ -39,17 +64,6 @@ export const Map = () => {
   }, []);
 
   // 나의 위치가 변경되면 지도에 반영한다.
-  useEffect(() => {
-    if (map && maps) {
-      map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
-    }
-  }, [driverCoords.lat, driverCoords.lng]);
-  const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
-    console.log(map);
-    map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
-    setMap(map);
-    setMaps(maps);
-  };
   const makeRoute = () => {
     if (map) {
       const directionsService = new google.maps.DirectionsService();
@@ -63,12 +77,9 @@ export const Map = () => {
       directionsRenderer.setMap(map);
       directionsService.route(
         {
-          // Driver 위치
+          // 나의 위치
           origin: {
-            location: new google.maps.LatLng(
-              driverCoords.lat,
-              driverCoords.lng
-            ),
+            location: new google.maps.LatLng(myCoords.lat, myCoords.lng),
           },
 
           // 가게 위치
@@ -89,6 +100,20 @@ export const Map = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (map && maps) {
+      map.panTo(new google.maps.LatLng(myCoords.lat, myCoords.lng));
+      makeRoute();
+    }
+  }, [myCoords.lat, myCoords.lng, makeRoute]);
+  const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
+    console.log(map);
+    map.panTo(new google.maps.LatLng(myCoords.lat, myCoords.lng));
+    setMap(map);
+    setMaps(maps);
+  };
+
   const { data: coockedOrdersData } = useSubscription<coockedOrders>(
     COOCKED_ORDERS_SUBSCRIPTION
   );

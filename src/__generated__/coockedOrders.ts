@@ -12,11 +12,15 @@ import { OrderStatus } from "./globalTypes";
 export interface coockedOrders_cookedOrders_driver {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface coockedOrders_cookedOrders_customer {
   __typename: "User";
   email: string;
+  lat: number;
+  lng: number;
 }
 
 export interface coockedOrders_cookedOrders_restaurant {

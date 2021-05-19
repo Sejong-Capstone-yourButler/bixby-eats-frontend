@@ -56,6 +56,8 @@ export interface CreateDishInput {
 export interface CreateOrderInput {
   restaurantId: number;
   items: CreateOrderItemInput[];
+  lat: number;
+  lng: number;
 }
 
 export interface CreateOrderItemInput {
@@ -234,11 +236,18 @@ export interface TakeOrderInput {
   id: number;
 }
 
+export interface UpdateCoordsInput {
+  lat: number;
+  lng: number;
+}
+
 export interface UserInputType {
   email: string;
   password: string;
   role: UserRole;
   verified: boolean;
+  lat: number;
+  lng: number;
   restaurants: RestaurantInputType[];
   orders: OrderInputType[];
   payments: PaymentInputType[];

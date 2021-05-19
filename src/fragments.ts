@@ -67,9 +67,13 @@ export const FULL_ORDER_FRAGMENT = gql`
     total
     driver {
       email
+      lat
+      lng
     }
     customer {
       email
+      lat
+      lng
     }
     restaurant {
       name
