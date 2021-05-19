@@ -149,7 +149,7 @@ export const Order = () => {
                   onClick={() => onButtonClick(OrderStatus.Cooked)}
                   className="btn"
                 >
-                  Order Cooked
+                  요리 완료
                 </button>
               )}
               {data?.getOrder.order?.status !== OrderStatus.Cooking &&
@@ -167,7 +167,7 @@ export const Order = () => {
                   onClick={() => onButtonClick(OrderStatus.PickedUp)}
                   className="btn"
                 >
-                  Picked Up
+                  픽업
                 </button>
               )}
               {data?.getOrder.order?.status === OrderStatus.PickedUp && (
@@ -175,7 +175,7 @@ export const Order = () => {
                   onClick={() => onButtonClick(OrderStatus.Delivered)}
                   className="btn"
                 >
-                  Order Delivered
+                  배달 완료
                 </button>
               )}
             </>
@@ -186,7 +186,7 @@ export const Order = () => {
             </span>
           )}
         </div>
-        <Map />
+        <Map order={data?.getOrder.order} />
       </div>
     </div>
   );

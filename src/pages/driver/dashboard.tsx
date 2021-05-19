@@ -101,7 +101,6 @@ export const Dashboard = () => {
           travelMode: google.maps.TravelMode.TRANSIT,
         },
         (result) => {
-          console.log(result);
           directionsRenderer.setDirections(result);
         }
       );
