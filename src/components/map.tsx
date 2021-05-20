@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
-import { gql, useMutation, useSubscription } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import {
   updateCoords,
   updateCoordsVariables,
@@ -13,17 +13,17 @@ interface ICoords {
   lng: number;
 }
 
-interface IDriverProps {
-  lat: number;
-  lng: number;
-  $hover?: any;
-}
+// interface IDriverProps {
+//   lat: number;
+//   lng: number;
+//   $hover?: any;
+// }
 
 interface IProps {
   order: getOrder_getOrder_order | null | undefined;
 }
 
-const Driver: React.FC<IDriverProps> = () => <div className="text-lg">🚖</div>;
+// const Driver: React.FC<IDriverProps> = () => <div className="text-lg">🚖</div>;
 
 export const UPDATE_COORDS_MUTATION = gql`
   mutation updateCoords($input: UpdateCoordsInput!) {
@@ -37,14 +37,11 @@ export const UPDATE_COORDS_MUTATION = gql`
 `;
 
 export const Map: React.FC<IProps> = ({ order }) => {
-  const [myDriverCoords, setMyDriverCoords] = useState<ICoords>({
-    lng: 0,
-    lat: 0,
-  });
   const [driverCoords, setDriverCoords] = useState<ICoords>({
-    lng: 0,
-    lat: 0,
+    lng: 36.58,
+    lat: 125.95,
   });
+
   console.log("ORDER");
   console.log(order);
 
@@ -65,55 +62,6 @@ export const Map: React.FC<IProps> = ({ order }) => {
 
   const me = useMe();
   const role = me.data?.me.role;
-  // @ts-ignore
-  const onSucces = ({ coords: { latitude, longitude } }: Position) => {
-    setMyDriverCoords({ lat: latitude, lng: longitude });
-    updateCoordsMutation({
-      variables: {
-        input: {
-          lat: latitude,
-          lng: longitude,
-        },
-      },
-    });
-  };
-  // @ts-ignore
-  const onError = (error: PositionError) => {
-    console.log("onError");
-    console.log(error);
-  };
-  // 나의 위치 갖오기
-  // 실시간으로 나의 위치(myDriverCoords)를 갱신한다.
-  useEffect(() => {
-    if (role === "Delivery") {
-      navigator.geolocation.watchPosition(onSucces, onError, {
-        enableHighAccuracy: true,
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (map && maps) {
-      map.panTo(new google.maps.LatLng(myDriverCoords.lat, myDriverCoords.lng));
-    }
-  }, [myDriverCoords.lat, myDriverCoords.lng]);
-
-  const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
-    map.panTo(new google.maps.LatLng(myDriverCoords.lat, myDriverCoords.lng));
-    setMap(map);
-    setMaps(maps);
-  };
-
-  // useEffect(() => {
-  //   if (coockedOrdersData?.cookedOrders.id) {
-  //     setDriverCoords({
-  //       lat: coockedOrdersData!.cookedOrders.driver!.lat,
-  //       lng: coockedOrdersData!.cookedOrders.driver!.lng,
-  //     });
-
-  //     makeRoute();
-  //   }
-  // }, [order?.status]);
 
   // 최종본
   let destinationLat: number = 0;
@@ -130,6 +78,8 @@ export const Map: React.FC<IProps> = ({ order }) => {
       destinationLng = order.customer?.lng;
     }
   }
+
+  console.log(order?.status, destinationLat, destinationLng);
   // 나의 위치가 변경되면 지도에 반영한다.
   const makeRoute = (destinationLat: number, destinationLng: number) => {
     if (map) {
@@ -166,9 +116,52 @@ export const Map: React.FC<IProps> = ({ order }) => {
       );
     }
   };
+
+  // @ts-ignore
+  const onSucces = ({ coords: { latitude, longitude } }: Position) => {
+    if (order && order?.driver && order?.driver.lat && order?.driver.lng)
+      setDriverCoords({ lat: order?.driver?.lat, lng: order?.driver?.lng });
+    updateCoordsMutation({
+      variables: {
+        input: {
+          lat: latitude,
+          lng: longitude,
+        },
+      },
+    });
+  };
+
+  // @ts-ignore
+  const onError = (error: PositionError) => {
+    console.log(error);
+  };
+  // 배달원의 위치 가져오기
+  // 실시간으로 배달원의 위치(driverCoords)를 갱신한다.
+  useEffect(() => {
+    if (role === "Delivery") {
+      navigator.geolocation.watchPosition(onSucces, onError, {
+        enableHighAccuracy: true,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (map && maps) {
+      map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
+    }
+  }, [driverCoords.lat, driverCoords.lng, map, maps]);
+
+  const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
+    console.log("map");
+    console.log(map);
+    map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
+    setMap(map);
+    setMaps(maps);
+  };
+
   useEffect(() => {
     makeRoute(destinationLat, destinationLng);
-  }, [destinationLat, destinationLng]); // todo getDriverLocation 구현
+  }, [destinationLat, destinationLng, makeRoute]); // todo getDriverLocation 구현
 
   return (
     <div>

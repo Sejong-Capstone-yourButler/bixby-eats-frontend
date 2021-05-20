@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
-import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
+import { gql, useMutation, useSubscription } from "@apollo/client";
 import { FULL_ORDER_FRAGMENT } from "../../fragments";
 import { coockedOrders } from "../../__generated__/coockedOrders";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { takeOrder, takeOrderVariables } from "../../__generated__/takeOrder";
 
 export const COOCKED_ORDERS_SUBSCRIPTION = gql`
@@ -29,12 +29,12 @@ interface ICoords {
   lng: number;
 }
 
-interface IDriverProps {
-  lat: number;
-  lng: number;
-  $hover?: any;
-}
-const Driver: React.FC<IDriverProps> = () => <div className="text-lg">🚖</div>;
+// interface IDriverProps {
+//   lat: number;
+//   lng: number;
+//   $hover?: any;
+// }
+// const Driver: React.FC<IDriverProps> = () => <div className="text-lg">🚖</div>;
 
 export const Dashboard = () => {
   const [driverCoords, setDriverCoords] = useState<ICoords>({ lng: 0, lat: 0 });
@@ -60,8 +60,9 @@ export const Dashboard = () => {
     if (map && maps) {
       map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
     }
-  }, [driverCoords.lat, driverCoords.lng]);
+  }, [driverCoords.lat, driverCoords.lng, map, maps]);
   const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
+    console.log("map");
     console.log(map);
     map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
     setMap(map);
@@ -113,7 +114,7 @@ export const Dashboard = () => {
     if (coockedOrdersData?.cookedOrders.id) {
       makeRoute();
     }
-  }, [coockedOrdersData]);
+  }, [coockedOrdersData, makeRoute]);
   const history = useHistory();
   const onCompleted = (data: takeOrder) => {
     if (data.takeOrder.ok) {
