@@ -5,6 +5,11 @@ import { FULL_ORDER_FRAGMENT } from "../../fragments";
 import { coockedOrders } from "../../__generated__/coockedOrders";
 import { useHistory } from "react-router-dom";
 import { takeOrder, takeOrderVariables } from "../../__generated__/takeOrder";
+import {
+  updateCoords,
+  updateCoordsVariables,
+} from "../../__generated__/updateCoords";
+import { UPDATE_COORDS_MUTATION } from "../../components/map";
 
 export const COOCKED_ORDERS_SUBSCRIPTION = gql`
   subscription coockedOrders {
@@ -29,21 +34,39 @@ interface ICoords {
   lng: number;
 }
 
-// interface IDriverProps {
-//   lat: number;
-//   lng: number;
-//   $hover?: any;
-// }
-// const Driver: React.FC<IDriverProps> = () => <div className="text-lg">🚖</div>;
+interface IDriverProps {
+  lat: number;
+  lng: number;
+  $hover?: any;
+}
+
+const Driver: React.FC<IDriverProps> = ({ lat, lng }) => (
+  // @ts-ignore
+  <div lat={lat} lng={lng} className="text-lg">
+    🚖
+  </div>
+);
 
 export const Dashboard = () => {
   const [driverCoords, setDriverCoords] = useState<ICoords>({ lng: 0, lat: 0 });
   const [map, setMap] = useState<google.maps.Map>();
   const [maps, setMaps] = useState<any>();
+  const [updateCoordsMutation] = useMutation<
+    updateCoords,
+    updateCoordsVariables
+  >(UPDATE_COORDS_MUTATION);
 
   // @ts-ignore
   const onSucces = ({ coords: { latitude, longitude } }: Position) => {
     setDriverCoords({ lat: latitude, lng: longitude });
+    updateCoordsMutation({
+      variables: {
+        input: {
+          lat: latitude,
+          lng: longitude,
+        },
+      },
+    });
   };
   // @ts-ignore
   const onError = (error: PositionError) => {
@@ -62,8 +85,6 @@ export const Dashboard = () => {
     }
   }, [driverCoords.lat, driverCoords.lng, map, maps]);
   const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
-    console.log("map");
-    console.log(map);
     map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
     setMap(map);
     setMaps(maps);
@@ -152,7 +173,9 @@ export const Dashboard = () => {
             lng: 125.95,
           }}
           bootstrapURLKeys={{ key: "AIzaSyDr47Qx79ewUO_hKU48SwY8VbXa72YuXDk" }}
-        ></GoogleMapReact>
+        >
+          <Driver lat={driverCoords.lat} lng={driverCoords.lng} />
+        </GoogleMapReact>
       </div>
       <div className="max-w-screen-sm mx-auto bg-white relative -top-10 shadow-lg py-8 px-5">
         {coockedOrdersData?.cookedOrders.restaurant ? (

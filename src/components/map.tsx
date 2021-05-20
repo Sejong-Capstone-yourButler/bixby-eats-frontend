@@ -13,17 +13,22 @@ interface ICoords {
   lng: number;
 }
 
-// interface IDriverProps {
-//   lat: number;
-//   lng: number;
-//   $hover?: any;
-// }
+interface IDriverProps {
+  lat: number;
+  lng: number;
+  $hover?: any;
+}
 
 interface IProps {
   order: getOrder_getOrder_order | null | undefined;
 }
 
-// const Driver: React.FC<IDriverProps> = () => <div className="text-lg">🚖</div>;
+const Driver: React.FC<IDriverProps> = ({ lat, lng }) => (
+  // @ts-ignore
+  <div lat={lat} lng={lng} className="text-lg">
+    🚖
+  </div>
+);
 
 export const UPDATE_COORDS_MUTATION = gql`
   mutation updateCoords($input: UpdateCoordsInput!) {
@@ -41,9 +46,10 @@ export const Map: React.FC<IProps> = ({ order }) => {
     lng: 36.58,
     lat: 125.95,
   });
-
-  console.log("ORDER");
-  console.log(order);
+  const [map, setMap] = useState<google.maps.Map>();
+  const [maps, setMaps] = useState<any>();
+  const me = useMe();
+  const role = me.data?.me.role;
 
   const onCompleted = (data: updateCoords) => {
     const {
@@ -53,15 +59,11 @@ export const Map: React.FC<IProps> = ({ order }) => {
       console.log(lat, lng);
     }
   };
-  const [map, setMap] = useState<google.maps.Map>();
-  const [maps, setMaps] = useState<any>();
+
   const [updateCoordsMutation] = useMutation<
     updateCoords,
     updateCoordsVariables
   >(UPDATE_COORDS_MUTATION, { onCompleted });
-
-  const me = useMe();
-  const role = me.data?.me.role;
 
   // 최종본
   let destinationLat: number = 0;
@@ -79,7 +81,6 @@ export const Map: React.FC<IProps> = ({ order }) => {
     }
   }
 
-  console.log(order?.status, destinationLat, destinationLng);
   // 나의 위치가 변경되면 지도에 반영한다.
   const makeRoute = (destinationLat: number, destinationLng: number) => {
     if (map) {
@@ -151,9 +152,9 @@ export const Map: React.FC<IProps> = ({ order }) => {
     }
   }, [driverCoords.lat, driverCoords.lng, map, maps]);
 
+  // map은 화면에 있는 지도의 정보다.
+  // maps는 내가 사용할 수 있는 구글 지도의 객체다.
   const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
-    console.log("map");
-    console.log(map);
     map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
     setMap(map);
     setMaps(maps);
@@ -179,7 +180,9 @@ export const Map: React.FC<IProps> = ({ order }) => {
             lng: 125.95,
           }}
           bootstrapURLKeys={{ key: "AIzaSyDr47Qx79ewUO_hKU48SwY8VbXa72YuXDk" }}
-        ></GoogleMapReact>
+        >
+          <Driver lat={driverCoords.lat} lng={driverCoords.lng} />
+        </GoogleMapReact>
       </div>
     </div>
   );
