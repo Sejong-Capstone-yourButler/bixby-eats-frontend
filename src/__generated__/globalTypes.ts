@@ -236,7 +236,7 @@ export interface TakeOrderInput {
   id: number;
 }
 
-export interface UpdateCoordsInput {
+export interface UpdateUserCoordsInput {
   lat: number;
   lng: number;
 }

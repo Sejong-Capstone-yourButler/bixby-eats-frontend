@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { gql, useMutation } from "@apollo/client";
 import {
-  updateCoords,
-  updateCoordsVariables,
-} from "../__generated__/updateCoords";
+  updateUserCoords,
+  updateUserCoordsVariables,
+} from "../__generated__/updateUserCoords";
 import { useMe } from "../hooks/useMe";
 import { getOrder_getOrder_order } from "../__generated__/getOrder";
 
@@ -31,8 +31,8 @@ const Driver: React.FC<IDriverProps> = ({ lat, lng }) => (
 );
 
 export const UPDATE_COORDS_MUTATION = gql`
-  mutation updateCoords($input: UpdateCoordsInput!) {
-    updateCoords(input: $input) {
+  mutation updateUserCoords($input: UpdateUserCoordsInput!) {
+    updateUserCoords(input: $input) {
       ok
       error
       lat
@@ -51,9 +51,9 @@ export const Map: React.FC<IProps> = ({ order }) => {
   const me = useMe();
   const role = me.data?.me.role;
 
-  const onCompleted = (data: updateCoords) => {
+  const onCompleted = (data: updateUserCoords) => {
     const {
-      updateCoords: { ok, lat, lng },
+      updateUserCoords: { ok, lat, lng },
     } = data;
     if (ok) {
       console.log(lat, lng);
@@ -61,8 +61,8 @@ export const Map: React.FC<IProps> = ({ order }) => {
   };
 
   const [updateCoordsMutation] = useMutation<
-    updateCoords,
-    updateCoordsVariables
+    updateUserCoords,
+    updateUserCoordsVariables
   >(UPDATE_COORDS_MUTATION, { onCompleted });
 
   // 최종본

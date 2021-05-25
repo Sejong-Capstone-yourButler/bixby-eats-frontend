@@ -6,9 +6,9 @@ import { coockedOrders } from "../../__generated__/coockedOrders";
 import { useHistory } from "react-router-dom";
 import { takeOrder, takeOrderVariables } from "../../__generated__/takeOrder";
 import {
-  updateCoords,
-  updateCoordsVariables,
-} from "../../__generated__/updateCoords";
+  updateUserCoords,
+  updateUserCoordsVariables,
+} from "../../__generated__/updateUserCoords";
 import { UPDATE_COORDS_MUTATION } from "../../components/map";
 
 export const COOCKED_ORDERS_SUBSCRIPTION = gql`
@@ -52,8 +52,8 @@ export const Dashboard = () => {
   const [map, setMap] = useState<google.maps.Map>();
   const [maps, setMaps] = useState<any>();
   const [updateCoordsMutation] = useMutation<
-    updateCoords,
-    updateCoordsVariables
+    updateUserCoords,
+    updateUserCoordsVariables
   >(UPDATE_COORDS_MUTATION);
 
   // @ts-ignore
