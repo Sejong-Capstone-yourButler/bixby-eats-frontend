@@ -189,7 +189,6 @@ export const MyRestaurant = () => {
                   x: income.createdAtString,
                   y: income.income,
                 }))}
-                interpolation="natural"
                 style={{
                   data: {
                     strokeWidth: 5,
