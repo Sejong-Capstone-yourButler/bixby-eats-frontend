@@ -265,7 +265,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
           className="input"
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="이름"
           value={pName}
           onChange={onChangeName}
           ref={register({ required: "Name is required." })}
@@ -275,7 +275,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
           type="number"
           name="price"
           min={0}
-          placeholder="Price"
+          placeholder="가격"
           value={pPrice}
           onChange={onChangePrice}
           ref={register({ required: "Price is required." })}
@@ -284,7 +284,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
           className="input"
           type="text"
           name="description"
-          placeholder="Description"
+          placeholder="설명"
           value={pDescription}
           onChange={onChangeDescription}
           ref={register({ required: "Description is required." })}
@@ -348,7 +348,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
                 name={`${id}-optionName`}
                 className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
                 type="text"
-                placeholder="Option Name"
+                placeholder="옵션 이름"
               />
               <input
                 ref={register}
@@ -356,7 +356,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
                 className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
                 type="number"
                 min={0}
-                placeholder="Option Extra"
+                placeholder="옵션 요금"
               />
               <span
                 className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 text-center"
@@ -429,7 +429,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
                 name={`${id}-ingredientName`}
                 className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
                 type="text"
-                placeholder="Ingredient Name"
+                placeholder="재료 이름"
               />
               <input
                 ref={register}
@@ -437,7 +437,7 @@ export const DishForm: React.FC<IDishFormProps> = ({
                 className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
                 type="number"
                 min={0}
-                placeholder="Ingredient Count"
+                placeholder="재료 개수"
               />
               <span
                 className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 text-center"
