@@ -40,13 +40,11 @@ export const EditDish = () => {
   return (
     <div className="flex flex-col items-center my-32">
       <Helmet>
-        <title>
-          {data?.getDish.dish?.name || "Loading..."} 수정 | Bixby Eats
-        </title>
+        <title>{data?.getDish.dish?.name || "Loading..."} 수정 | 쿠게더</title>
       </Helmet>
 
       {!data?.getDish.dish ? (
-        <h4 className="text-xl mb-5">Please upload a dish!</h4>
+        <h4 className="text-xl mb-5">메뉴를 만들어주세요!</h4>
       ) : (
         <DishForm
           id={data?.getDish?.dish?.id + ""}
