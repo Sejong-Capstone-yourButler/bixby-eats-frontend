@@ -14,7 +14,6 @@ export interface getStocks_getStocks_stocks {
   id: number;
   name: string;
   count: number;
-  price: number | null;
   description: string | null;
 }
 

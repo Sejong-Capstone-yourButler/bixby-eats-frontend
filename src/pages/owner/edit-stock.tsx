@@ -1,6 +1,6 @@
+import React from "react";
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
-import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useHistory, useParams } from "react-router";
 import { StockForm } from "../../components/stockForm";
@@ -15,7 +15,6 @@ const GET_STOCKS_QUERY = gql`
         id
         name
         count
-        price
         description
       }
     }
@@ -47,9 +46,8 @@ export const EditStock = () => {
         <title>Edit Stock | Bixby Eats</title>
       </Helmet>
       <h4 className="font-semibold text-2xl mb-3">Edit Stock</h4>
-      <div className="grid grid-cols-5 max-w-screen-lg gap-3 my-5 w-full">
+      <div className="grid grid-cols-4 max-w-screen-lg gap-3 my-5 w-full">
         <div className="text-center text-lg font-bold">Name</div>
-        <div className="text-center text-lg font-bold">Price</div>
         <div className="text-center text-lg font-bold">Count</div>
         <div className="text-center text-lg font-bold">Description</div>
         <div></div>
@@ -60,7 +58,6 @@ export const EditStock = () => {
           key={stock.id}
           id={stock.id + ""}
           name={stock.name}
-          price={stock.price}
           count={stock.count}
           description={stock.description}
         />

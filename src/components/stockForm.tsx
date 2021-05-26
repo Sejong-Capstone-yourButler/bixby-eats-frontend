@@ -8,14 +8,12 @@ import { editStock, editStockVariables } from "../__generated__/editStock";
 interface IStockFormProps {
   id: string;
   name: string;
-  price: number | null;
   count: number;
   description: string | null;
 }
 
 interface IForm {
   name: string;
-  price: number;
   count: number;
   description: string;
 }
@@ -32,7 +30,6 @@ const EDIT_STOCK_MUTATION = gql`
 export const StockForm: React.FC<IStockFormProps> = ({
   id,
   name,
-  price,
   count,
   description,
 }) => {
@@ -43,7 +40,6 @@ export const StockForm: React.FC<IStockFormProps> = ({
   });
 
   const [pName, setName] = useState<string>(name);
-  const [pPrice, setPrice] = useState<number>(price ? price : 0);
   const [pCount, setCount] = useState<number>(count);
   const [pDescription, setDescription] = useState<string>(
     description ? description : ""
@@ -54,12 +50,6 @@ export const StockForm: React.FC<IStockFormProps> = ({
       target: { value },
     } = e;
     setName(value);
-  };
-  const onChangePrice = (e: any) => {
-    const {
-      target: { value },
-    } = e;
-    setPrice(value);
   };
   const onChangeCount = (e: any) => {
     const {
@@ -74,12 +64,11 @@ export const StockForm: React.FC<IStockFormProps> = ({
     setDescription(value);
   };
   const onSubmit = () => {
-    const { name, price, count, description } = getValues();
+    const { name, count, description } = getValues();
     editStockMutation({
       variables: {
         input: {
           name,
-          price: +price,
           count: +count,
           description,
           stockId: +id,
@@ -90,7 +79,7 @@ export const StockForm: React.FC<IStockFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-cols-5 max-w-screen-lg gap-3 w-full mb-5"
+      className="grid grid-cols-4 max-w-screen-lg gap-3 w-full mb-5"
     >
       <input
         className="input"
@@ -100,16 +89,6 @@ export const StockForm: React.FC<IStockFormProps> = ({
         value={pName}
         onChange={onChangeName}
         ref={register({ required: "Name is required." })}
-      />
-      <input
-        className="input"
-        type="number"
-        name="price"
-        min={0}
-        placeholder="Price"
-        value={pPrice}
-        onChange={onChangePrice}
-        ref={register({ required: "Price is required." })}
       />
       <input
         className="input"
