@@ -101,7 +101,7 @@ export const Order = () => {
   return (
     <div className="mt-32 container flex justify-center">
       <Helmet>
-        <title>주문 #{params.id} | Bixby Eats</title>
+        <title>주문 #{params.id} | 쿠게더</title>
       </Helmet>
       <div className="border border-gray-800 w-full max-w-screen-sm flex flex-col justify-center">
         <h4 className="bg-gray-800 w-full py-5 text-white text-center text-xl">
@@ -131,7 +131,7 @@ export const Order = () => {
           </div>
           {userData?.me.role === UserRole.Client && (
             <span className=" text-center mt-5 mb-3  text-2xl text-lime-600">
-              상태 : {data?.getOrder.order?.status}
+              주문 상태 : {data?.getOrder.order?.status}
             </span>
           )}
           {userData?.me.role === UserRole.Owner && (
@@ -155,7 +155,7 @@ export const Order = () => {
               {data?.getOrder.order?.status !== OrderStatus.Cooking &&
                 data?.getOrder.order?.status !== OrderStatus.Pending && (
                   <span className=" text-center mt-5 mb-3  text-2xl text-lime-600">
-                    Status: {data?.getOrder.order?.status}
+                    주문 상태: {data?.getOrder.order?.status}
                   </span>
                 )}
             </>
@@ -182,7 +182,7 @@ export const Order = () => {
           )}
           {data?.getOrder.order?.status === OrderStatus.Delivered && (
             <span className=" text-center mt-5 mb-3  text-2xl text-lime-600">
-              Thank you for using Bixby Eats
+              쿠게더를 이용해주셔서 감사합니다.
             </span>
           )}
         </div>
