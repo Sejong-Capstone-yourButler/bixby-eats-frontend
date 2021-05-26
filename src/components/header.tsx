@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
           </Link>
           <span className="">
             <button className="mr-5 text-xl font-bold" onClick={logout}>
-              Logout
+              로그아웃
             </button>
             <Link to="/edit-profile">
               <FontAwesomeIcon icon={faUser} className="text-3xl" />
