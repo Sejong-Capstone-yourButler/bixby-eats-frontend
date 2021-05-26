@@ -342,18 +342,21 @@ export const DishForm: React.FC<IDishFormProps> = ({
 
         {optionsNumbers.length !== 0 &&
           optionsNumbers.map((id) => (
-            <div key={id} className="grid grid-cols-3 mt-5">
+            <div
+              key={id}
+              className="grid grid-cols-3 gap-3 mt-5 max-w-screen-lg w-full"
+            >
               <input
                 ref={register}
                 name={`${id}-optionName`}
-                className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
+                className="input"
                 type="text"
                 placeholder="옵션 이름"
               />
               <input
                 ref={register}
                 name={`${id}-optionExtra`}
-                className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
+                className="input"
                 type="number"
                 min={0}
                 placeholder="옵션 요금"
@@ -423,18 +426,21 @@ export const DishForm: React.FC<IDishFormProps> = ({
 
         {ingredientsNumbers.length !== 0 &&
           ingredientsNumbers.map((id) => (
-            <div key={id} className="grid grid-cols-3 mt-5">
+            <div
+              key={id}
+              className="grid grid-cols-3 gap-3 mt-5 max-w-screen-lg w-full"
+            >
               <input
                 ref={register}
                 name={`${id}-ingredientName`}
-                className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
+                className="input"
                 type="text"
                 placeholder="재료 이름"
               />
               <input
                 ref={register}
                 name={`${id}-ingredientCount`}
-                className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
+                className="input"
                 type="number"
                 min={0}
                 placeholder="재료 개수"
