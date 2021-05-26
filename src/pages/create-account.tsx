@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
-import bixbyEatsLogo from "../images/logo.svg";
+import cooGetherLogo from "../images/logo.svg";
 import {
   createAccountMutation,
   createAccountMutationVariables,
@@ -41,7 +41,7 @@ export const CreateAccount = () => {
       createAccount: { ok },
     } = data;
     if (ok) {
-      alert("Account Created! Log in now!");
+      alert("계정이 생성되었습니다. 로그인 하세요!");
       history.push("/");
     }
   };
@@ -67,12 +67,12 @@ export const CreateAccount = () => {
   return (
     <div className="h-screen flex items-center flex-col mt-10 lg:mt-28">
       <Helmet>
-        <title>Create Account | Bixby Eats</title>
+        <title>계정 생성 | 쿠게더</title>
       </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-        <img src={bixbyEatsLogo} className="w-28 mb-10" alt="Bixby Eats" />
+        <img src={cooGetherLogo} className="w-28 mb-10" alt="Bixby Eats" />
         <h4 className="w-full font-medium text-left text-3xl mb-5">
-          Let's get started
+          쿠게더와 함께
         </h4>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -87,7 +87,7 @@ export const CreateAccount = () => {
             name="email"
             required
             type="email"
-            placeholder="Email"
+            placeholder="이메일"
             className="input"
           />
           {errors.email?.message && (
@@ -101,14 +101,14 @@ export const CreateAccount = () => {
             required
             name="password"
             type="password"
-            placeholder="Password"
+            placeholder="비밀번호"
             className="input"
           />
           {errors.password?.message && (
             <FormError errorMessage={errors.password?.message} />
           )}
           {errors.password?.type === "minLength" && (
-            <FormError errorMessage="Password must be more than 10 chars." />
+            <FormError errorMessage="비밀번호는 10자리 이상이어야 합니다." />
           )}
           <select
             name="role"
@@ -122,7 +122,7 @@ export const CreateAccount = () => {
           <Button
             canClick={formState.isValid}
             loading={loading}
-            actionText={"Create Account"}
+            actionText={"계정 생성"}
           />
           {createAccountMutationResult?.createAccount.error && (
             <FormError
@@ -131,9 +131,9 @@ export const CreateAccount = () => {
           )}
         </form>
         <div>
-          Already have an account?{" "}
+          이미 계정이 있으신가요?{" "}
           <Link to="/" className="text-lime-600 hover:underline">
-            Log in now
+            로그인하기
           </Link>
         </div>
       </div>
