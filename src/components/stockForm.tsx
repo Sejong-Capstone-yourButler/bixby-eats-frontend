@@ -85,7 +85,7 @@ export const StockForm: React.FC<IStockFormProps> = ({
         className="input"
         type="text"
         name="name"
-        placeholder="Name"
+        placeholder="이름"
         value={pName}
         onChange={onChangeName}
         ref={register({ required: "Name is required." })}
@@ -95,7 +95,7 @@ export const StockForm: React.FC<IStockFormProps> = ({
         type="number"
         name="count"
         min={0}
-        placeholder="Count"
+        placeholder="개수"
         value={pCount}
         onChange={onChangeCount}
         ref={register({ required: "Count is required." })}
@@ -104,7 +104,7 @@ export const StockForm: React.FC<IStockFormProps> = ({
         className="input"
         type="text"
         name="description"
-        placeholder="Description"
+        placeholder="설명"
         value={pDescription}
         onChange={onChangeDescription}
         ref={register({ required: "Description is required." })}
@@ -112,7 +112,7 @@ export const StockForm: React.FC<IStockFormProps> = ({
       <Button
         loading={loading}
         canClick={formState.isValid}
-        actionText="Edit Stock"
+        actionText="재고 수정"
       />
     </form>
   );

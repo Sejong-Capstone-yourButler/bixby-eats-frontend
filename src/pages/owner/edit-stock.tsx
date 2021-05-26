@@ -43,13 +43,13 @@ export const EditStock = () => {
   return (
     <div className="container flex flex-col items-center my-32">
       <Helmet>
-        <title>Edit Stock | Bixby Eats</title>
+        <title>재고 수정 | 쿠게더</title>
       </Helmet>
-      <h4 className="font-semibold text-2xl mb-3">Edit Stock</h4>
+      <h4 className="font-semibold text-2xl mb-3">재고 수정</h4>
       <div className="grid grid-cols-4 max-w-screen-lg gap-3 my-5 w-full">
-        <div className="text-center text-lg font-bold">Name</div>
-        <div className="text-center text-lg font-bold">Count</div>
-        <div className="text-center text-lg font-bold">Description</div>
+        <div className="text-center text-lg font-bold">이름</div>
+        <div className="text-center text-lg font-bold">개수</div>
+        <div className="text-center text-lg font-bold">설명</div>
         <div></div>
       </div>
 
@@ -64,7 +64,7 @@ export const EditStock = () => {
       ))}
 
       <button onClick={back} className="btn w-32">
-        Back
+        뒤로가기
       </button>
     </div>
   );
