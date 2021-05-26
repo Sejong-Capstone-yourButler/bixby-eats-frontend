@@ -64,7 +64,7 @@ export const Restaurants = () => {
   return (
     <div>
       <Helmet>
-        <title>Home | Bixby Eats</title>
+        <title>홈 | 쿠게더</title>
       </Helmet>
       <form
         onSubmit={handleSubmit(onSearchSubmit)}
@@ -75,7 +75,7 @@ export const Restaurants = () => {
           name="searchTerm"
           type="Search"
           className="input rounded-md border-0 w-3/4 md:w-3/12"
-          placeholder="Search restaurants..."
+          placeholder="식당 검색"
         />
       </form>
       {!loading && (
@@ -118,7 +118,7 @@ export const Restaurants = () => {
               <div></div>
             )}
             <span>
-              Page {page} of {data?.restaurants.totalPages}
+              페이지 {page} / {data?.restaurants.totalPages}
             </span>
             {page !== data?.restaurants.totalPages ? (
               <button

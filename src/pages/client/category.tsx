@@ -40,5 +40,5 @@ export const Category = () => {
       },
     }
   );
-  return <h1>Category</h1>;
+  return <h1>카테고리</h1>;
 };
