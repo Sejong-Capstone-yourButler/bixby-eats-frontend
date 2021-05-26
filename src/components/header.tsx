@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { isLoggedInVar } from "../apollo";
 import { LOCALSTORAGE_TOKEN } from "../constants";
 import { useMe } from "../hooks/useMe";
-import bixbyEatsLogo from "../images/logo.svg";
+import cooGetherLogo from "../images/logo.svg";
 
 export const Header: React.FC = () => {
   const { data } = useMe();
@@ -21,13 +21,13 @@ export const Header: React.FC = () => {
     <>
       {!data?.me.verified && (
         <div className="bg-red-500 p-3 text-center text-base text-white">
-          <span>Please verify your email.</span>
+          <span>이메일을 인증해주세요.</span>
         </div>
       )}
       <header className="py-4">
         <div className="w-full px-5 xl:px-0 max-w-screen-xl mx-auto flex justify-between items-center">
           <Link to="/">
-            <img src={bixbyEatsLogo} className="w-20" alt="Nuber Eats" />
+            <img src={cooGetherLogo} className="w-20" alt="Nuber Eats" />
           </Link>
           <span className="">
             <button className="mr-5 text-xl font-bold" onClick={logout}>
