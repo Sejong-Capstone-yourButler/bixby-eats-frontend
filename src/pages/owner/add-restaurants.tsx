@@ -125,7 +125,7 @@ export const AddRestaurant = () => {
   return (
     <div className="container flex flex-col items-center mt-52">
       <Helmet>
-        <title>식당 추가 | Bixby Eats</title>
+        <title>식당 추가 | 쿠게더</title>
       </Helmet>
       <h4 className="font-semibold text-2xl mb-3">식당 추가</h4>
       <form
@@ -136,21 +136,21 @@ export const AddRestaurant = () => {
           className="input"
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="식당 이름"
           ref={register({ required: "Name is required." })}
         />
         <input
           className="input"
           type="text"
           name="address"
-          placeholder="Address"
+          placeholder="식당 주소"
           ref={register({ required: "Address is required." })}
         />
         <input
           className="input"
           type="text"
           name="categoryName"
-          placeholder="Category Name"
+          placeholder="식당 카테고리"
           ref={register({ required: "Category Name is required." })}
         />
         <div>
@@ -164,7 +164,7 @@ export const AddRestaurant = () => {
         <Button
           loading={uploading}
           canClick={formState.isValid}
-          actionText="Create Restaurant"
+          actionText="식당 생성"
         />
         {data?.createRestaurant?.error && (
           <FormError errorMessage={data.createRestaurant.error} />
