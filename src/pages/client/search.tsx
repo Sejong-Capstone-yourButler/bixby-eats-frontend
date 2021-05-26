@@ -52,7 +52,7 @@ export const Search = () => {
   return (
     <div>
       <Helmet>
-        <title>Search | Bixby Eats</title>
+        <title>검색 | 쿠게더</title>
       </Helmet>
       {!loading && (
         <div className="max-w-screen-xl pb-20 mx-auto mt-8">
@@ -81,7 +81,7 @@ export const Search = () => {
               <div></div>
             )}
             <span>
-              Page {page} of {data?.searchRestaurant.totalPages}
+              페이지 {page} / {data?.searchRestaurant.totalPages}
             </span>
             {page !== data?.searchRestaurant?.totalPages ? (
               <button
