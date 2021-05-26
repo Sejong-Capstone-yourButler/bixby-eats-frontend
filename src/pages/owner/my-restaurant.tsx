@@ -121,7 +121,7 @@ export const MyRestaurant = () => {
     <div>
       <Helmet>
         <title>
-          {data?.myRestaurant.restaurant?.name || "Loading..."} | Bixby Eats
+          {data?.myRestaurant.restaurant?.name || "Loading..."} | 쿠게더
         </title>
       </Helmet>
       <div
@@ -139,13 +139,13 @@ export const MyRestaurant = () => {
             to={`/restaurants/${id}/add-dish`}
             className="mb-2 lg:mr-8 bg-gray-800 myRestaurantButton"
           >
-            Add Dish &rarr;
+            메뉴 추가 &rarr;
           </Link>
           <Link
             to={`/restaurants/${id}/stocks`}
             className="lg:mr-8 bg-lime-700 myRestaurantButton"
           >
-            Stock Management &rarr;
+            재고 관리 &rarr;
           </Link>
         </div>
         <div className="mt-10">
@@ -167,7 +167,7 @@ export const MyRestaurant = () => {
           )}
         </div>
         <div className="mt-20 mb-10">
-          <h4 className="text-center text-2xl font-medium">Sales</h4>
+          <h4 className="text-center text-2xl font-medium">매출표</h4>
           <div className="  mt-10">
             <VictoryChart
               height={500}

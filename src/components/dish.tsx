@@ -108,13 +108,13 @@ export const Dish: React.FC<IDishProps> = ({
                 to={`/restaurants/${restaurantId}/dish/${id}/edit-dish`}
                 className={`ml-3 py-1 px-3 focus:outline-none text-sm bg-lime-600 text-white`}
               >
-                Edit
+                수정
               </Link>
               <button
                 className={`ml-3 py-1 px-3 focus:outline-none text-sm bg-red-500 text-white`}
                 onClick={deleteBtn}
               >
-                {deleteDishLoading ? "Loading..." : "Delete"}
+                {deleteDishLoading ? "Loading..." : "삭제"}
               </button>
             </>
           )}
