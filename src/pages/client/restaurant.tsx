@@ -179,7 +179,7 @@ export const Restaurant = () => {
       alert("Can't place empty order");
       return;
     }
-    const ok = window.confirm("You are about to place an order");
+    const ok = window.confirm("주문을 하시겠습니까?");
     if (ok) {
       createOrderMutation({
         variables: {
@@ -196,7 +196,7 @@ export const Restaurant = () => {
   return (
     <div>
       <Helmet>
-        <title>{data?.restaurant.restaurant?.name || ""} | Bixby Eats</title>
+        <title>{data?.restaurant.restaurant?.name || ""} | 쿠게더</title>
       </Helmet>
       <div
         className=" bg-gray-800 bg-center bg-cover py-48"
@@ -217,19 +217,19 @@ export const Restaurant = () => {
       <div className="md:max-w-screen-xl mx-auto pb-32 flex flex-col items-end mt-20">
         {!orderStarted && (
           <button onClick={triggerStartOrder} className="btn px-10">
-            Start Order
+            주문 하기
           </button>
         )}
         {orderStarted && (
           <div className="flex items-center">
             <button onClick={triggerConfirmOrder} className="btn px-10 mr-3">
-              Confirm Order
+              주문 확인
             </button>
             <button
               onClick={triggerCancelOrder}
               className="btn px-10 bg-black hover:bg-black"
             >
-              Cancel Order
+              주문 취소
             </button>
           </div>
         )}

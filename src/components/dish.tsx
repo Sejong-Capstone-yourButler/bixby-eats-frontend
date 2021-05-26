@@ -99,7 +99,7 @@ export const Dish: React.FC<IDishProps> = ({
               }`}
               onClick={onClick}
             >
-              {isSelected ? "Remove" : "Add"}
+              {isSelected ? "제거" : "추가"}
             </button>
           )}
           {userRole && userRole === "Owner" && (
