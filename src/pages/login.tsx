@@ -7,7 +7,7 @@ import { authTokenVar, isLoggedInVar } from "../apollo";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
 import { LOCALSTORAGE_TOKEN } from "../constants";
-import bixbyEatsLogo from "../images/logo.svg";
+import cooGetherLogo from "../images/logo.svg";
 import {
   loginMutation,
   loginMutationVariables,
@@ -71,12 +71,12 @@ export const Login = () => {
   return (
     <div className="h-screen flex items-center flex-col mt-10 lg:mt-28">
       <Helmet>
-        <title>Login | Bixby Eats</title>
+        <title>로그인 | 쿠게더</title>
       </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-        <img src={bixbyEatsLogo} className="w-28 mb-10" alt="Bixby Eats" />
+        <img src={cooGetherLogo} className="w-28 mb-10" alt="Bixby Eats" />
         <h4 className="w-full font-medium text-left text-3xl mb-5">
-          Welcome back
+          어서오세요
         </h4>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -91,7 +91,7 @@ export const Login = () => {
             name="email"
             required
             type="email"
-            placeholder="Email"
+            placeholder="이메일"
             className="input"
           />
           {errors.email?.message && (
@@ -105,7 +105,7 @@ export const Login = () => {
             required
             name="password"
             type="password"
-            placeholder="Password"
+            placeholder="비밀번호"
             className="input"
           />
           {errors.password?.message && (
@@ -117,16 +117,16 @@ export const Login = () => {
           <Button
             canClick={formState.isValid}
             loading={loading}
-            actionText={"Log in"}
+            actionText={"로그인"}
           />
           {loginMutationResult?.login.error && (
             <FormError errorMessage={loginMutationResult.login.error} />
           )}
         </form>
         <div>
-          New to Bixby Eats?{" "}
+          쿠게더가 처음이신가요?{" "}
           <Link to="/create-account" className="text-lime-600 hover:underline">
-            Create an Account
+            계정 생성
           </Link>
         </div>
       </div>
