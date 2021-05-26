@@ -181,10 +181,10 @@ export const Dashboard = () => {
         {coockedOrdersData?.cookedOrders.restaurant ? (
           <>
             <h1 className="text-center text-3xl font-medium">
-              New Coocked Order
+              새로운 주문이 왔습니다.
             </h1>
             <h1 className="text-center my-3 text-2xl font-medium">
-              Pick it up soon @{" "}
+              픽업 @ {""}
               {coockedOrdersData?.cookedOrders.restaurant?.name}
             </h1>
             <button
@@ -193,12 +193,12 @@ export const Dashboard = () => {
               }
               className="btn w-full  block  text-center mt-5"
             >
-              Accept Challenge &rarr;
+              배달 수락하기 &rarr;
             </button>
           </>
         ) : (
           <h1 className="text-center  text-3xl font-medium">
-            No orders yet...
+            아직 주문이 없습니다.
           </h1>
         )}
       </div>
