@@ -99,9 +99,9 @@ export const AddDish = () => {
   return (
     <div className="container flex flex-col items-center mt-52">
       <Helmet>
-        <title>Add Dish | Bixby Eats</title>
+        <title>메뉴 추가 | 쿠게더</title>
       </Helmet>
-      <h4 className="font-semibold text-2xl mb-3">Add Dish</h4>
+      <h4 className="font-semibold text-2xl mb-3">메뉴 추가</h4>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid max-w-screen-sm gap-3 mt-5 w-full mb-5"
@@ -110,7 +110,7 @@ export const AddDish = () => {
           className="input"
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="메뉴 이름"
           ref={register({ required: "Name is required." })}
         />
         <input
@@ -118,23 +118,23 @@ export const AddDish = () => {
           type="number"
           name="price"
           min={0}
-          placeholder="Price"
+          placeholder="가격"
           ref={register({ required: "Price is required." })}
         />
         <input
           className="input"
           type="text"
           name="description"
-          placeholder="Description"
+          placeholder="설명"
           ref={register({ required: "Description is required." })}
         />
         <div className="my-10">
-          <h4 className="font-medium  mb-3 text-lg">Dish Options</h4>
+          <h4 className="font-medium  mb-3 text-lg">메뉴 옵션</h4>
           <span
             onClick={onAddOptionClick}
             className="cursor-pointer text-white bg-gray-900 py-1 px-2 mt-5 bg-"
           >
-            Add Dish Option
+            메뉴 옵션 추가
           </span>
           {optionsNumber.length !== 0 &&
             optionsNumber.map((id) => (
@@ -144,7 +144,7 @@ export const AddDish = () => {
                   name={`${id}-optionName`}
                   className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
                   type="text"
-                  placeholder="Option Name"
+                  placeholder="옵션 이름"
                 />
                 <input
                   ref={register}
@@ -152,24 +152,24 @@ export const AddDish = () => {
                   className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
                   type="number"
                   min={0}
-                  placeholder="Option Extra"
+                  placeholder="옵션 요금"
                 />
                 <span
                   className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 bg-"
                   onClick={() => onOptionDeleteClick(id)}
                 >
-                  Delete Option
+                  옵션 삭제
                 </span>
               </div>
             ))}
         </div>
         <div className="my-10">
-          <h4 className="font-medium mb-3 text-lg">Ingredients</h4>
+          <h4 className="font-medium mb-3 text-lg">재료</h4>
           <span
             onClick={onAddIngredientClick}
             className="cursor-pointer text-white bg-gray-900 py-1 px-2 mt-5 bg-"
           >
-            Add ingredients used for the dish
+            메뉴에 사용된 재료 추가
           </span>
           {ingredientsNumber.length !== 0 &&
             ingredientsNumber.map((id) => (
@@ -179,7 +179,7 @@ export const AddDish = () => {
                   name={`${id}-ingredientName`}
                   className="py-2 px-4 focus:outline-none mr-3 focus:border-gray-600 border-2"
                   type="text"
-                  placeholder="Ingredient Name"
+                  placeholder="재료 이름"
                 />
                 <input
                   ref={register}
@@ -187,13 +187,13 @@ export const AddDish = () => {
                   className="py-2 px-4 focus:outline-none focus:border-gray-600 border-2"
                   type="number"
                   min={0}
-                  placeholder="Ingredient Count"
+                  placeholder="재료 개수"
                 />
                 <span
                   className="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5 bg-"
                   onClick={() => onIngredientDeleteClick(id)}
                 >
-                  Delete Option
+                  재료 삭제
                 </span>
               </div>
             ))}
@@ -201,7 +201,7 @@ export const AddDish = () => {
         <Button
           loading={loading}
           canClick={formState.isValid}
-          actionText="Create Dish"
+          actionText="메뉴 추가"
         />
       </form>
     </div>
