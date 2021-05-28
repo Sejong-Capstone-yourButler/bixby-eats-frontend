@@ -214,10 +214,15 @@ export const MyRestaurant = () => {
                 tickLabelComponent={<VictoryLabel renderInPortal />}
                 style={{
                   tickLabels: {
-                    fontSize: 10,
+                    fontSize: 20,
                   } as any,
                 }}
-                tickFormat={(tick) => new Date(tick).toLocaleDateString("ko")}
+                tickFormat={(tick) => {
+                  const [_, month, day] = new Date(tick)
+                    .toLocaleDateString("ko")
+                    .split(".");
+                  return `${month}.${day}`;
+                }}
               />
             </VictoryChart>
           </div>
