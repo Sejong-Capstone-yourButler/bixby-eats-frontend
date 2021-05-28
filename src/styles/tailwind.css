@@ -18,7 +18,7 @@
 }
 
 .myRestaurantButton {
-  @apply text-white py-3 px-10;
+  @apply lg:mr-8 text-white py-3 px-10;
 }
 
 @tailwind utilities;

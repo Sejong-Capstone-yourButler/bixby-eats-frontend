@@ -137,19 +137,19 @@ export const MyRestaurant = () => {
         <div className="flex flex-col lg:block w-full">
           <Link
             to={`/restaurants/${id}/add-dish`}
-            className="mb-2 lg:mr-8 bg-gray-800 myRestaurantButton"
+            className="mb-2 bg-gray-800 myRestaurantButton"
           >
             메뉴 추가 &rarr;
           </Link>
           <Link
             to={`/restaurants/${id}/stocks`}
-            className="lg:mr-8 bg-lime-700 myRestaurantButton"
+            className="mb-2 bg-lime-700 myRestaurantButton"
           >
             재고 관리 &rarr;
           </Link>
           <Link
             to={`/restaurants/${id}/edit-restaurant`}
-            className="lg:mr-8 bg-yellow-700 myRestaurantButton"
+            className="bg-yellow-700 myRestaurantButton"
           >
             식당 수정 &rarr;
           </Link>
