@@ -24,6 +24,7 @@ import { EditProfile } from "../pages/user/edit-profile";
 
 import { UserRole } from "../__generated__/globalTypes";
 import { EditDish } from "../pages/owner/edit-dish";
+import { EditRestaurant } from "../pages/owner/edit-restaurants";
 
 const clientRoutes = [
   {
@@ -54,6 +55,7 @@ const restaurantRoutes = [
   { path: "/", component: <MyRestaurants /> },
   { path: "/add-restaurant", component: <AddRestaurant /> },
   { path: "/restaurants/:id", component: <MyRestaurant /> },
+  { path: "/restaurants/:id/edit-restaurant", component: <EditRestaurant /> },
   { path: "/restaurants/:restaurantId/add-dish", component: <AddDish /> },
   {
     path: "/restaurants/:restaurantId/dish/:dishId/edit-dish",

@@ -147,6 +147,12 @@ export const MyRestaurant = () => {
           >
             재고 관리 &rarr;
           </Link>
+          <Link
+            to={`/restaurants/${id}/edit-restaurant`}
+            className="lg:mr-8 bg-yellow-700 myRestaurantButton"
+          >
+            식당 수정 &rarr;
+          </Link>
         </div>
         <div className="mt-10">
           {data?.myRestaurant.restaurant?.menu.length === 0 ? (

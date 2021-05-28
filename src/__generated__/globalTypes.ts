@@ -119,6 +119,16 @@ export interface EditProfileInput {
   password?: string | null;
 }
 
+export interface EditRestaurantInput {
+  name?: string | null;
+  coverImg?: string | null;
+  address?: string | null;
+  lat?: number | null;
+  lng?: number | null;
+  categoryName?: string | null;
+  restaurantId: number;
+}
+
 export interface EditStockInput {
   name?: string | null;
   count?: number | null;
