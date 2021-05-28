@@ -214,7 +214,7 @@ export const MyRestaurant = () => {
                 tickLabelComponent={<VictoryLabel renderInPortal />}
                 style={{
                   tickLabels: {
-                    fontSize: 20,
+                    fontSize: 10,
                   } as any,
                 }}
                 tickFormat={(tick) => new Date(tick).toLocaleDateString("ko")}

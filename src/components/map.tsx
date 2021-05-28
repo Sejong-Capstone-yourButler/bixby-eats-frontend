@@ -70,8 +70,6 @@ export const Map: React.FC<IProps> = ({ order }) => {
   let destinationLng: number = 0;
 
   if (order && order?.status === "Cooked") {
-    console.log("Cooked lat and lng");
-    console.log(order.restaurant);
     if (order.restaurant && order.restaurant.lat && order.restaurant.lng) {
       destinationLat = order.restaurant?.lat;
       destinationLng = order.restaurant?.lng;
