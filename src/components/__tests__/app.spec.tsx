@@ -22,6 +22,8 @@ describe("<App />", () => {
   });
   it("renders LoggedInRouter", async () => {
     const { getByText } = render(<App />);
+
+    // waitFor은 state가 refresh하고 쓸 수 있을 때까지 기다려준다.
     await waitFor(() => {
       isLoggedInVar(true);
     });
