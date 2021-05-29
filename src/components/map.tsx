@@ -111,7 +111,7 @@ export const Map: React.FC<IProps> = ({ order }) => {
           },
           travelMode: google.maps.TravelMode.TRANSIT,
         },
-        (result) => {
+        (result: any) => {
           directionsRenderer.setDirections(result);
         }
       );

@@ -21,8 +21,7 @@ describe("<App />", () => {
     getByText("logged-out");
   });
   it("renders LoggedInRouter", async () => {
-    const { getByText, debug } = render(<App />);
-    debug();
+    const { getByText } = render(<App />);
     await waitFor(() => {
       isLoggedInVar(true);
     });
