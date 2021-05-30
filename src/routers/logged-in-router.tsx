@@ -25,6 +25,7 @@ import { EditProfile } from "../pages/user/edit-profile";
 import { UserRole } from "../__generated__/globalTypes";
 import { EditDish } from "../pages/owner/edit-dish";
 import { EditRestaurant } from "../pages/owner/edit-restaurants";
+import { OrderPickedUp } from "../pages/order-pickedup";
 
 const clientRoutes = [
   {
@@ -49,6 +50,7 @@ const commonRoutes = [
   { path: "/confirm", component: <ConfirmEmail /> },
   { path: "/edit-profile", component: <EditProfile /> },
   { path: "/orders/:id", component: <Order /> },
+  { path: "/orders/:id/pickedup", component: <OrderPickedUp /> },
 ];
 
 const restaurantRoutes = [
@@ -102,7 +104,7 @@ export const LoggedInRouter = () => {
             </Route>
           ))}
         {commonRoutes.map((route) => (
-          <Route key={route.path} path={route.path}>
+          <Route exact key={route.path} path={route.path}>
             {route.component}
           </Route>
         ))}

@@ -7,6 +7,7 @@ import {
 } from "../__generated__/updateUserCoords";
 import { useMe } from "../hooks/useMe";
 import { getOrder_getOrder_order } from "../__generated__/getOrder";
+import { useHistory } from "react-router";
 
 interface ICoords {
   lat: number;
@@ -21,6 +22,7 @@ interface IDriverProps {
 
 interface IProps {
   order: getOrder_getOrder_order | null | undefined;
+  picked: boolean;
 }
 
 const Driver: React.FC<IDriverProps> = ({ lat, lng }) => (
@@ -41,7 +43,7 @@ export const UPDATE_COORDS_MUTATION = gql`
   }
 `;
 
-export const Map: React.FC<IProps> = ({ order }) => {
+export const Map: React.FC<IProps> = ({ order, picked = true }) => {
   const [driverCoords, setDriverCoords] = useState<ICoords>({
     lng: 36.58,
     lat: 125.95,
@@ -50,6 +52,8 @@ export const Map: React.FC<IProps> = ({ order }) => {
   const [maps, setMaps] = useState<any>();
   const me = useMe();
   const role = me.data?.me.role;
+
+  const history = useHistory();
 
   const onCompleted = (data: updateUserCoords) => {
     const {
@@ -65,7 +69,6 @@ export const Map: React.FC<IProps> = ({ order }) => {
     updateUserCoordsVariables
   >(UPDATE_COORDS_MUTATION, { onCompleted });
 
-  // 최종본
   let destinationLat: number = 0;
   let destinationLng: number = 0;
 
@@ -76,8 +79,10 @@ export const Map: React.FC<IProps> = ({ order }) => {
     }
   } else if (order && order?.status === "PickedUp") {
     if (order.customer && order.customer.lat && order.customer.lng) {
-      destinationLat = order.customer?.lat;
-      destinationLng = order.customer?.lng;
+      if (picked) {
+        destinationLat = order.customer?.lat;
+        destinationLng = order.customer?.lng;
+      } else history.push(`/orders/${order?.id}/pickedup`);
     }
   }
 

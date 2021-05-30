@@ -1,51 +1,20 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
-import { FULL_ORDER_FRAGMENT } from "../fragments";
 import { useMe } from "../hooks/useMe";
 import { editOrder, editOrderVariables } from "../__generated__/editOrder";
 import { getOrder, getOrderVariables } from "../__generated__/getOrder";
 import { orderUpdates } from "../__generated__/orderUpdates";
 import { OrderStatus, UserRole } from "../__generated__/globalTypes";
 import { Map } from "../components/map";
-
-export const GET_ORDER = gql`
-  query getOrder($input: GetOrderInput!) {
-    getOrder(input: $input) {
-      ok
-      error
-      order {
-        ...FullOrderParts
-      }
-    }
-  }
-  ${FULL_ORDER_FRAGMENT}
-`;
-
-export const EDIT_ORDER = gql`
-  mutation editOrder($input: EditOrderInput!) {
-    editOrder(input: $input) {
-      ok
-      error
-    }
-  }
-`;
-
-export const ORDER_SUBSCRIPTION = gql`
-  subscription orderUpdates($input: OrderUpdatesInput!) {
-    orderUpdates(input: $input) {
-      ...FullOrderParts
-    }
-  }
-  ${FULL_ORDER_FRAGMENT}
-`;
+import { EDIT_ORDER, GET_ORDER, ORDER_SUBSCRIPTION } from "./order";
 
 interface IParams {
   id: string;
 }
 
-export const Order = () => {
+export const OrderPickedUp = () => {
   const params = useParams<IParams>();
   const { data: userData } = useMe();
   const [editOrderMutation] =
@@ -186,7 +155,7 @@ export const Order = () => {
             </span>
           )}
         </div>
-        <Map order={data?.getOrder.order} picked={false} />
+        <Map order={data?.getOrder.order} picked={true} />
       </div>
     </div>
   );
