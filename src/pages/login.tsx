@@ -18,7 +18,7 @@ import {
 // loginMutation, loginMutationVariables이 생성된다.
 // mutation 옆에 loginMutation은 typescript name이다.
 // 그 밑에 login이 back-end에 있는 mutation name이다.
-const LOGIN_MUTATION = gql`
+export const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
     login(input: $loginInput) {
       ok
@@ -94,11 +94,11 @@ export const Login = () => {
             placeholder="이메일"
             className="input"
           />
-          {errors.email?.message && (
-            <FormError errorMessage={errors.email?.message} />
-          )}
           {errors.email?.type === "pattern" && (
             <FormError errorMessage={"Please enter a valid email"} />
+          )}
+          {errors.email?.message && (
+            <FormError errorMessage={errors.email?.message} />
           )}
           <input
             ref={register({ required: "Password is required" })}
@@ -110,9 +110,6 @@ export const Login = () => {
           />
           {errors.password?.message && (
             <FormError errorMessage={errors.password?.message} />
-          )}
-          {errors.password?.type === "minLength" && (
-            <FormError errorMessage="Password must be more than 10 chars." />
           )}
           <Button
             canClick={formState.isValid}
