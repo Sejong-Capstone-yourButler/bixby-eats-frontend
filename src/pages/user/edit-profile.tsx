@@ -83,36 +83,37 @@ export const EditProfile = () => {
   return (
     <div className="mt-52 flex flex-col justify-center items-center">
       <Helmet>
-        <title>Edit Profile | Bixby Eats</title>
+        <title>프로필 편집 | 쿠게더</title>
       </Helmet>
-      <h4 className="font-semibold text-2xl mb-3">Edit Profile</h4>
+      <h4 className="font-semibold text-2xl mb-3">프로필 편집</h4>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid max-w-screen-sm gap-3 mt-5 w-full mb-5"
       >
         <input
           ref={register({
-            pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            pattern:
+              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
           })}
           name="email"
           className="input"
           type="email"
-          placeholder="Email"
+          placeholder="이메일"
         />
         <input
           ref={register}
           name="password"
           className="input"
           type="password"
-          placeholder="Password"
+          placeholder="비밀번호"
         />
         <Button
           loading={loading}
           canClick={formState.isValid}
-          actionText="Save Profile"
+          actionText="프로필 저장"
         />
         <button onClick={back} className="btn">
-          Back
+          뒤로가기
         </button>
       </form>
     </div>
