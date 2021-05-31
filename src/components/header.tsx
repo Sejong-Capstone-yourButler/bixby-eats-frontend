@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { isLoggedInVar } from "../apollo";
 import { LOCALSTORAGE_TOKEN } from "../constants";
 import { useMe } from "../hooks/useMe";
-import cooGetherLogo from "../images/logo.svg";
+import cooGetherLogo from "../images/logo.png";
 
 export const Header: React.FC = () => {
   const { data } = useMe();
@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
       <header className="py-4">
         <div className="w-full px-5 xl:px-0 max-w-screen-xl mx-auto flex justify-between items-center">
           <Link to="/">
-            <img src={cooGetherLogo} className="w-20" alt="Nuber Eats" />
+            <img src={cooGetherLogo} className="w-28" alt="cooGether" />
           </Link>
           <span className="">
             <button className="mr-5 text-xl font-bold" onClick={logout}>

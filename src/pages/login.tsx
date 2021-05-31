@@ -7,7 +7,7 @@ import { authTokenVar, isLoggedInVar } from "../apollo";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
 import { LOCALSTORAGE_TOKEN } from "../constants";
-import cooGetherLogo from "../images/logo.svg";
+import cooGetherLogo from "../images/logo.png";
 import {
   loginMutation,
   loginMutationVariables,
@@ -74,7 +74,7 @@ export const Login = () => {
         <title>로그인 | 쿠게더</title>
       </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-        <img src={cooGetherLogo} className="w-28 mb-10" alt="Bixby Eats" />
+        <img src={cooGetherLogo} className="w-64 mb-10" alt="cooGether" />
         <h4 className="w-full font-medium text-left text-3xl mb-5">
           어서오세요
         </h4>

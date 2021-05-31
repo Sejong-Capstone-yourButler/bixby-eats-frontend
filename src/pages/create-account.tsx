@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
-import cooGetherLogo from "../images/logo.svg";
+import cooGetherLogo from "../images/logo.png";
 import {
   createAccountMutation,
   createAccountMutationVariables,
@@ -70,7 +70,7 @@ export const CreateAccount = () => {
         <title>계정 생성 | 쿠게더</title>
       </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-        <img src={cooGetherLogo} className="w-28 mb-10" alt="Bixby Eats" />
+        <img src={cooGetherLogo} className="w-64 mb-10" alt="cooGether" />
         <h4 className="w-full font-medium text-left text-3xl mb-5">
           쿠게더와 함께
         </h4>
