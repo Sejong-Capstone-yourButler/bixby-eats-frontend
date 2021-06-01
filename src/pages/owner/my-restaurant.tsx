@@ -173,7 +173,7 @@ export const MyRestaurant = () => {
           )}
         </div>
         <div className="mt-20 mb-10">
-          <h4 className="text-center text-2xl font-medium">매출표</h4>
+          <h4 className="text-center text-2xl font-medium">매출 그래프</h4>
           <div className="  mt-10">
             <VictoryChart
               height={500}
@@ -214,7 +214,7 @@ export const MyRestaurant = () => {
                 tickLabelComponent={<VictoryLabel renderInPortal />}
                 style={{
                   tickLabels: {
-                    fontSize: 10,
+                    fontSize: 18,
                   } as any,
                 }}
                 tickFormat={(tick) => {
