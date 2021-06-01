@@ -147,6 +147,12 @@ export const OrderPickedUp = () => {
                   배달 완료
                 </button>
               )}
+              {data?.getOrder.order?.status !== OrderStatus.Cooked &&
+                data?.getOrder.order?.status !== OrderStatus.PickedUp && (
+                  <span className=" text-center mt-5 mb-3  text-2xl text-lime-600">
+                    주문 상태: {data?.getOrder.order?.status}
+                  </span>
+                )}
             </>
           )}
           {data?.getOrder.order?.status === OrderStatus.Delivered && (

@@ -160,6 +160,7 @@ export const Order = () => {
                 )}
             </>
           )}
+
           {userData?.me.role === UserRole.Delivery && (
             <>
               {data?.getOrder.order?.status === OrderStatus.Cooked && (
