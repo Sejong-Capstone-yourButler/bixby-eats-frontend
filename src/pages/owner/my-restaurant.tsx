@@ -214,7 +214,7 @@ export const MyRestaurant = () => {
                 tickLabelComponent={<VictoryLabel renderInPortal />}
                 style={{
                   tickLabels: {
-                    fontSize: 18,
+                    fontSize: 12,
                   } as any,
                 }}
                 tickFormat={(tick) => {
