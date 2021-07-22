@@ -18,7 +18,7 @@ const wsLink = new WebSocketLink({
   uri:
     process.env.NODE_ENV === "production"
       ? "wss://bixby-eats-backend.herokuapp.com/graphql"
-      : `ws://localhost:4000/graphql`,
+      : `ws://localhost:4001/graphql`,
   options: {
     reconnect: true,
     connectionParams: {
@@ -31,7 +31,7 @@ const httpLink = createHttpLink({
   uri:
     process.env.NODE_ENV === "production"
       ? "https://bixby-eats-backend.herokuapp.com/graphql"
-      : "http://localhost:4000/graphql",
+      : "http://localhost:4001/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -63,7 +63,7 @@ export const client = new ApolloClient({
         fields: {
           isLoggedIn: {
             read() {
-              return isLoggedInVar();
+              return isLoggedInVar(); // makeVar()를 통해서 어디서든지 값을 사용하게 하고 is
             },
           },
           token: {

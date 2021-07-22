@@ -26,6 +26,7 @@ export const ConfirmEmail = () => {
       verifyEmail: { ok },
     } = data;
     if (ok && userData?.me.id) {
+      // apollo cache를 write 함으로써 refresh나 refetch를 하지 않는다.
       client.writeFragment({
         id: `User:${userData.me.id}`,
         fragment: gql`

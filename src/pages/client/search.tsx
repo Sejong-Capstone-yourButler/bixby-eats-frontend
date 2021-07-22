@@ -28,10 +28,13 @@ export const Search = () => {
   const [page, setPage] = useState(1);
   const location = useLocation();
   const history = useHistory();
-  const [callQuery, { loading, data, called }] =
-    useLazyQuery<searchRestaurant, searchRestaurantVariables>(
-      SEARCH_RESTAURANT
-    );
+  // useLazyQuery는 즉시 실행되지 않는 Query다.
+  // 페이지를 load한다고 해서 useQuery처럼 query가 실행되지는 않는다.
+  // useMutation처럼 나중에 query를 사용할 수 있는 함수를 return한다.
+  const [callQuery, { loading, data, called }] = useLazyQuery<
+    searchRestaurant,
+    searchRestaurantVariables
+  >(SEARCH_RESTAURANT);
   useEffect(() => {
     const [, query] = location.search.split("?term=");
     if (!query) {
