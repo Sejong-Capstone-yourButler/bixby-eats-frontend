@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Header } from "../components/header";
 import { useMe } from "../hooks/useMe";
@@ -26,6 +26,8 @@ import { UserRole } from "../__generated__/globalTypes";
 import { EditDish } from "../pages/owner/edit-dish";
 import { EditRestaurant } from "../pages/owner/edit-restaurants";
 import { OrderPickedUp } from "../pages/order-pickedup";
+import { useReactiveVar } from "@apollo/client";
+import { authTokenVar } from "../apollo";
 
 const clientRoutes = [
   {
@@ -72,7 +74,11 @@ const restaurantRoutes = [
 const driverRoutes = [{ path: "/", component: <Dashboard /> }];
 
 export const LoggedInRouter = () => {
-  const { data, loading, error } = useMe();
+  const { data, loading, error, refetch } = useMe();
+  const token = useReactiveVar(authTokenVar);
+  useEffect(() => {
+    refetch();
+  }, [token]);
 
   if (!data || loading || error) {
     return (

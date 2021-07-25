@@ -87,7 +87,10 @@ export const Dashboard = () => {
   const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
     map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
     setMap(map); // map은 지금 당장 내가 가지고 있는 지도 정보다. react component다.
-    setMaps(maps); // maps는 내가 사용할 수 있는 Google maps 객체다. map을 위한 constructor다.
+
+    // maps는 내가 사용할 수 있는 Google maps 객체다. map을 위한 constructor다.
+    // 하지만 google.maps를 사용하면 state로 관리할 필요가 없다.
+    setMaps(maps);
   };
   // 나의 위치와 목적지의 route를 만든다.
   const makeRoute = () => {
