@@ -1,9 +1,8 @@
-import { setContext } from "@apollo/client/link/context";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { authTokenVar, isLoggedInVar } from "../apollo";
+import { isLoggedInVar } from "../apollo";
 import { LOCALSTORAGE_TOKEN } from "../constants";
 import { useMe } from "../hooks/useMe";
 import cooGetherLogo from "../images/logo.png";
