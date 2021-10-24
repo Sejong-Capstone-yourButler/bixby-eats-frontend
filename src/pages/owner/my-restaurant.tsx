@@ -125,7 +125,7 @@ export const MyRestaurant = () => {
         </title>
       </Helmet>
       <div
-        className="bg-gray-700  py-28 bg-center bg-cover"
+        className="bg-gray-700 py-28 bg-center bg-cover"
         style={{
           backgroundImage: `url(${data?.myRestaurant.restaurant?.coverImg})`,
         }}

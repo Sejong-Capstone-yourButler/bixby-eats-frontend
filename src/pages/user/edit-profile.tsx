@@ -26,6 +26,8 @@ interface IFormProps {
 
 export const EditProfile = () => {
   const { data: userData } = useMe();
+  console.log(userData?.me.email);
+
   const history = useHistory();
   const client = useApolloClient();
   const onCompleted = (data: editProfile) => {
